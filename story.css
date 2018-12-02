@@ -1,0 +1,31 @@
+.green {
+  color: #096a42;
+  background-color: #096a42;
+}
+.blue {
+  color: #012989;
+  background-color: #012989;
+}
+.yellow {
+  color: #dcd607;
+  background-color: #dcd607;
+}
+.top-background {
+  /* background-image: linear-gradient(to right top, #096a42, #378841, #66a438, #9dbf27, #dcd607)!important; */
+  
+  /* background: rgb(1,41,137)!important;
+  background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 50%, rgba(220,214,7,1) 100%)!important; */
+  
+  background: rgb(1,41,137);
+  background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 100%)!important;
+
+  /* background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 30%, rgba(9,106,66,1) 70%, rgba(220,214,7,1) 100%)!important; */
+}
+@media only screen and (min-width: 768px) {
+  header.masthead .page-heading, header.masthead .post-heading, header.masthead .site-heading {
+    padding: 100px 0;
+  }
+}
+.copyright {
+  margin: 0;
+}
