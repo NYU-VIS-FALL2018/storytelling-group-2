@@ -54,3 +54,51 @@ function drawProgagationSpeedChart(tagId, data, clusters) {
   // Add the Y Axis
   svg.append('g').call(d3.axisLeft(y));
 }
+
+function renderTopClustersTable(tagId, clusters) {
+  const columns = ['Size', 'Headline'];
+
+  let table = d3
+    .select(tagId)
+    .append('table')
+    .attr('class', 'table');
+
+  let thead = table.append('thead');
+  var tbody = table.append('tbody');
+  // append the header row
+  thead
+    .append('tr')
+    .selectAll('th')
+    .data(columns)
+    .enter()
+    .append('th')
+    .text(function(column) {
+      return column;
+    });
+
+  // create a row for each object in the data
+  var rows = tbody
+    .selectAll('tr')
+    .data(clusters)
+    .enter()
+    .append('tr');
+
+  // create a cell in each row for each column
+  var cells = rows
+    .selectAll('td')
+    .data(function(row) {
+      let text = row[0]['headline'];
+      text = text.replace('Bolsonaro', '<span class="text-blue">Bolsonaro</span>');
+      
+      text = text.replace('Haddad', '<span class="text-red">Haddad</span>');
+      text = text.replace('PT', '<span class="text-red">PT</span>');
+      text = text.replace('Lula', '<span class="text-red">Lula</span>');
+
+      text = text.replace('Gomes', '<span class="text-green">Gomes</span>');
+      return [{ value: row.length }, { value: text }];
+    })
+    .enter()
+    .append('td')
+    
+    .html(d => d.value);
+}

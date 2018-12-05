@@ -1,15 +1,27 @@
-.green {
-  color: #096a42;
+.bg-green {
   background-color: #096a42;
 }
-.blue {
-  color: #012989;
+
+.bg-blue {
   background-color: #012989;
 }
-.yellow {
-  color: #dcd607;
+
+.bg-yellow {
   background-color: #dcd607;
 }
+
+.text-blue {
+  color: #0238b8;
+}
+
+.text-green {
+  color: #099b39;
+}
+
+.text-red {
+  color: rgb(194, 0, 0);
+}
+
 .top-background {
   /* background-image: linear-gradient(to right top, #096a42, #378841, #66a438, #9dbf27, #dcd607)!important; */
   
@@ -51,4 +63,11 @@
   fill: none;
   stroke: #012989;
   stroke-width: 2px;
+}
+
+#top-clusters-table table tr:hover {
+  cursor: pointer;
+}
+#top-clusters-table table td {
+  vertical-align: middle;
 }

@@ -34,6 +34,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
+            
             <div class="post-heading">
               <h1>News Progagation During the 2018 Brazilian Presidential Elections</h1>
               <h2 class="subheading">
@@ -83,8 +84,13 @@
 
             <div class="wide-chart" id="propagation-speed-chart"></div>
 
+            <div class="mt-5" style="height:500px;overflow:auto;">
+              <div id="google_translate_element" style="text-align:center;padding-top:5px"></div>
+              <div id="top-clusters-table"></div>
+            </div>
+
             <p>
-              Following is the same chart with a minimum cluster size filter of 15.
+              Following is the same chart with a minimum cluster size.
             </p>
             <div class="wide-chart" id="propagation-speed-chart-min-size"></div>
             
@@ -103,11 +109,6 @@
               enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
             </p>
 
-            <p>
-              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi
-              vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
-            </p>
-
             <blockquote class="blockquote">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
               Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
@@ -120,10 +121,6 @@
               enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
             </p>
 
-            <p>
-              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi
-              vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
-            </p>
           </div>
         </div>
       </div>
@@ -148,6 +145,16 @@
     <script src="propagation-speed.js"></script>
     <script>
       const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
+      const TIMESTAMP_HEADER = 'timestamp';
+      const DEFAULT_MIN_DATE = '2018-09-01';
+      const DEFAULT_MAX_DATE = '2018-09-11';
+      const DEFAULT_MIN_CLUSTER_SIZE = 10;
+      // const csvFile = 'data/BR-Crawl-Articles-Annotated.csv.Clustered.csv';
+      // const TIMESTAMP_HEADER = 'article_timestamp';
+      // const DEFAULT_MIN_DATE = '2018-07-01';
+      // const DEFAULT_MAX_DATE = '2018-10-30';
+      // const DEFAULT_MIN_CLUSTER_SIZE = 5;
+
       const store = {};
 
       function loadData() {
@@ -158,21 +165,23 @@
       }
 
       function parseCsvDataTypes(data) {
+        data = data.filter(d => d[TIMESTAMP_HEADER]);
+        data = data.filter(d => d.domain !== 'ocafezinho.com') // BAD data
         data.forEach(d => {
-          d.date = new Date(d.timestamp);
           d.cluster_id = +d.cluster_id;
+          d.date = new Date(d[TIMESTAMP_HEADER]);
         });
         return data;
       }
 
       function filterStoriesByDate(data, min, max) {
-        let minDate = min || new Date('2018-09-01');
-        let maxDate = max || new Date('2018-09-14');
+        let minDate = new Date(min) || new Date(DEFAULT_MIN_DATE);
+        let maxDate = new Date(max) || new Date(DEFAULT_MAX_DATE);
         return data.filter(d => d.date < maxDate && d.date > minDate);
       }
 
       function filterStoriesByClusterSize(clusters, min, max) {
-        let minSize = min || 5;
+        let minSize = min || DEFAULT_MIN_CLUSTER_SIZE;
         let maxSize = max || Number.MAX_SAFE_INTEGER;
         return clusters.filter(c => c.length < maxSize && c.length > minSize);
       }
@@ -180,9 +189,6 @@
       function groupByClusterId(data) {
         let result = {};
         data.forEach(function(d) {
-          d.date = new Date(d.timestamp);
-          d.cluster_id = +d.cluster_id;
-
           let group = result[d.cluster_id] || [];
           group.push(d);
           result[d.cluster_id] = group;
@@ -199,15 +205,33 @@
 
       function showData() {
         let data = store.data;
+        console.log('data.length:' + data.length);
+        
         data = parseCsvDataTypes(data);
-        data = filterStoriesByDate(data);
+        console.log('data.length:' + data.length);
+
+        data = filterStoriesByDate(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
+        console.log('data.length:' + data.length);
+        
         clusters = groupByClusterId(data);
-        clustersFiltered = filterStoriesByClusterSize(clusters, 15);
+        console.log('clusters.length:' + clusters.length);
+        
+        clustersFiltered = filterStoriesByClusterSize(clusters, DEFAULT_MIN_CLUSTER_SIZE);
+        console.log('clustersFiltered.length:' + clustersFiltered.length);
+        
         drawProgagationSpeedChart('#propagation-speed-chart', data, clusters);
         drawProgagationSpeedChart('#propagation-speed-chart-min-size', data, clustersFiltered);
+        renderTopClustersTable('#top-clusters-table', clustersFiltered);
       }
 
       loadData().then(showData);
-    </script>
+      </script>
+
+      <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'pt'}, 'google_translate_element');
+      }
+      </script>
+      <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
 </html>
