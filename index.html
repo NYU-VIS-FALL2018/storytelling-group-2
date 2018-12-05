@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Storytelling Project</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href="vendor/clean-blog/css/clean-blog.min.css" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="vendor/clean-blog/css/clean-blog.min.css" rel="stylesheet" />
 
     <!-- Story CSS files -->
-    <link href="story.css" rel="stylesheet">
+    <link href="story.css" rel="stylesheet" />
   </head>
 
   <body>
-
     <!-- Page Header -->
     <header class="masthead top-background">
       <div class="overlay"></div>
@@ -29,9 +36,12 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
               <h1>News Progagation During the 2018 Brazilian Presidential Elections</h1>
-              <h2 class="subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo</h2>
+              <h2 class="subheading">
+                The political debate was highly polarized and led to the victory of the candidate with highest rejection
+                according to public opnion polls.
+              </h2>
               <span class="meta">Elaborated by Aécio Santos, Anas Elghafari, and Sonia Castelo.</span>
-              <span>December, 2018</span>
+              <span>December, 2018.</span>
             </div>
           </div>
         </div>
@@ -42,35 +52,84 @@
     <article>
       <div class="container">
         <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+          <div class="col-lg-12 col-md-12 mx-auto main-article">
+            <p>
+              In 2018, Brazil had its 8<sup>th</sup> direct democratic presidential election since the end of the
+              military dictatorship in 1985. It was arguably one of the most controversial elections since the beginning
+              of Brazil's current democratic period.
+            </p>
+            <p>Following are some of the most important candidates during this election:</p>
+            <p class="d-flex justify-content-around">
+              <img
+                class="img-fluid img-candidate rounded d-block"
+                title="Jair Bolsonaro. Source: Wikipedia"
+                src="images/150px-Jair_Bolsonaro.jpg"
+              />
+              <img
+                class="img-fluid img-candidate rounded d-block"
+                title="Fernando Haddad. Source: Wikipedia"
+                src="images/150px-Fernando_Haddad.jpg"
+              />
+              <img
+                class="img-fluid img-candidate rounded d-block"
+                title="Ciro Gomes. Source: Wikipedia"
+                src="images/150px-Ciro_Gomes.jpg"
+              />
+            </p>
 
-            <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+            <h2 class="section-heading">Story Propagation Speed</h2>
+
+            <p>Following chart shows the speed wich news stories propagated from its original source to other sites.</p>
+
+            <div class="wide-chart" id="propagation-speed-chart"></div>
+
+            <p>
+              Following is the same chart with a minimum cluster size filter of 15.
+            </p>
+            <div class="wide-chart" id="propagation-speed-chart-min-size"></div>
             
-            <p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p>
-            
-            <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
-            
-            <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.</p>
+            <p>
+              Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+              sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante
+              tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci
+              eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+            </p>
 
             <h2 class="section-heading">Lorem ipsum dolor sit amet</h2>
 
-            <p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p>
-            
-            <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
+            <p>
+              Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
+              nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
+              enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+            </p>
 
-            <blockquote class="blockquote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium.</blockquote>
+            <p>
+              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi
+              vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
+            </p>
 
-            <p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p>
-            
-            <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
+            <blockquote class="blockquote">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+              Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+              ultricies nec, pellentesque eu, pretium.
+            </blockquote>
 
+            <p>
+              Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
+              nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
+              enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+            </p>
+
+            <p>
+              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi
+              vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
+            </p>
           </div>
         </div>
       </div>
     </article>
 
-    <hr>
+    <hr />
 
     <!-- Footer -->
     <footer>
@@ -78,8 +137,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <p class="copyright text-muted">
-                Project developed for the Information Visualization (2018) course
-                at NYU Tandon School of Engineering.
+              Project developed for the Information Visualization (2018) course at NYU Tandon School of Engineering.
             </p>
           </div>
         </div>
@@ -87,9 +145,69 @@
     </footer>
     <!-- D3.js -->
     <script src="d3.js"></script>
+    <script src="propagation-speed.js"></script>
     <script>
-        console.log(d3);
+      const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
+      const store = {};
+
+      function loadData() {
+        return Promise.all([d3.csv(csvFile)]).then(datasets => {
+          store.data = datasets[0];
+          return store;
+        });
+      }
+
+      function parseCsvDataTypes(data) {
+        data.forEach(d => {
+          d.date = new Date(d.timestamp);
+          d.cluster_id = +d.cluster_id;
+        });
+        return data;
+      }
+
+      function filterStoriesByDate(data, min, max) {
+        let minDate = min || new Date('2018-09-01');
+        let maxDate = max || new Date('2018-09-14');
+        return data.filter(d => d.date < maxDate && d.date > minDate);
+      }
+
+      function filterStoriesByClusterSize(clusters, min, max) {
+        let minSize = min || 5;
+        let maxSize = max || Number.MAX_SAFE_INTEGER;
+        return clusters.filter(c => c.length < maxSize && c.length > minSize);
+      }
+
+      function groupByClusterId(data) {
+        let result = {};
+        data.forEach(function(d) {
+          d.date = new Date(d.timestamp);
+          d.cluster_id = +d.cluster_id;
+
+          let group = result[d.cluster_id] || [];
+          group.push(d);
+          result[d.cluster_id] = group;
+        });
+        // converts the results object into an array
+        result = Object.keys(result).map(key => {
+          // sorts each stories cluster by date
+          return result[key].sort((a, b) => d3.ascending(a.date, b.date));
+        });
+        // make sure clusters are sorted from largest to smallest
+        result.sort((a, b) => d3.descending(a.length, b.length));
+        return result;
+      }
+
+      function showData() {
+        let data = store.data;
+        data = parseCsvDataTypes(data);
+        data = filterStoriesByDate(data);
+        clusters = groupByClusterId(data);
+        clustersFiltered = filterStoriesByClusterSize(clusters, 15);
+        drawProgagationSpeedChart('#propagation-speed-chart', data, clusters);
+        drawProgagationSpeedChart('#propagation-speed-chart-min-size', data, clustersFiltered);
+      }
+
+      loadData().then(showData);
     </script>
   </body>
-
 </html>

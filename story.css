@@ -26,6 +26,29 @@
     padding: 100px 0;
   }
 }
+
+.main-article > * {
+  margin-left: 190px;
+  margin-right: 190px
+}
+
+.main-article .wide-chart {
+  margin-left: 0px;
+  margin-right: 0px;
+  text-align: center;
+}
+
+
 .copyright {
   margin: 0;
+}
+
+.img-candidate {
+  max-height: 200px;
+}
+
+.line {
+  fill: none;
+  stroke: #012989;
+  stroke-width: 2px;
 }
