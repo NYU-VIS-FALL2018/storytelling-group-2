@@ -19,7 +19,7 @@
 }
 
 .text-red {
-  color: rgb(194, 0, 0);
+  color: #c20000;
 }
 
 .top-background {
@@ -65,9 +65,25 @@
   stroke-width: 2px;
 }
 
+.stroke-blue {
+  stroke: #012989;
+}
+
+.stroke-red {
+  stroke: #c20000;
+}
+
+.stroke-gray {
+  stroke: #999;
+}
+
+
 #top-clusters-table table tr:hover {
   cursor: pointer;
 }
 #top-clusters-table table td {
   vertical-align: middle;
+}
+#top-clusters-table table td span {
+  vertical-align: bottom;
 }

@@ -35,14 +35,40 @@ function drawProgagationSpeedChart(tagId, data, clusters) {
     .x(d => x(d.date))
     .y((d, i) => y(i) /* y(d.close) */);
 
+  // Scale for the opacity 
+  let opacityScale =
+    d3.scalePow()
+    // d3.scaleLinear()
+    .exponent(1)
+    .range([.0, 1.0])
+    .domain([0, d3.max(clusters, d => d.length)]);
+
   // Add the valueline path to the svg
   svg
     .selectAll('.line')
     .data(clusters)
     .enter()
     .append('path')
-    .attr('class', 'line')
-    .style('stroke-opacity', 0.5)
+    .attr('class', (d) => {
+      let bozo = 0, haddad = 0;
+      d.forEach( story => {
+        if (story.headline.includes('Bolsonaro')) {
+          bozo++;
+        } else if (story.headline.includes('Haddad')) {
+          haddad++;
+        }
+      });
+      let color;
+      if (bozo > haddad) {
+        color = 'stroke-blue';
+      } else if(haddad > bozo) {
+        color = 'stroke-red';
+      } else {
+        color = 'stroke-gray';
+      }
+      return 'line ' + color;
+    })
+    .style('stroke-opacity', (d) => opacityScale(d.length))
     .attr('d', valueline);
 
   // Add the X Axis
