@@ -1,0 +1,31 @@
+#mentions-bar-chart .axis text {
+  font-size: 18px;
+  color: #333;
+}
+
+#mentions-bar-chart rect {
+  fill: #012989;
+}
+
+#mentions-bar-chart .axis path,
+#mentions-bar-chart .axis line {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+#mentions-bar-chart .x path {
+	display: none;
+}
+
+#mentions-bar-chart .toolTip {
+	position: absolute;
+  display: none;
+  min-width: 80px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #D4D8DA;
+  padding: 14px;
+  text-align: center;
+}

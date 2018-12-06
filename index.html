@@ -25,6 +25,7 @@
 
     <!-- Story CSS files -->
     <link href="story.css" rel="stylesheet" />
+    <link href="mentions-bar-chart.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -77,6 +78,11 @@
                 src="images/150px-Ciro_Gomes.jpg"
               />
             </p>
+
+            <h2 class="section-heading">Candidate Mentions</h2>
+            <div id="mentions-bar-chart">
+              <svg width="960" height="500"></svg>
+            </div>
 
             <h2 class="section-heading">Story Propagation Speed</h2>
 
@@ -142,6 +148,7 @@
     </footer>
     <!-- D3.js -->
     <script src="d3.js"></script>
+    <script src="candidate-mentions-bar-chart.js"></script>
     <script src="propagation-speed.js"></script>
     <script>
       const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
