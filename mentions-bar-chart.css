@@ -3,10 +3,6 @@
   color: #333;
 }
 
-#mentions-bar-chart rect {
-  fill: #012989;
-}
-
 #mentions-bar-chart .axis path,
 #mentions-bar-chart .axis line {
   fill: none;

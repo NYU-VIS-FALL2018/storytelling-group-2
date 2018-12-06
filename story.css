@@ -77,6 +77,9 @@
   stroke: #999;
 }
 
+#top-clusters-table {
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif
+}
 
 #top-clusters-table table tr:hover {
   cursor: pointer;
