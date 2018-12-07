@@ -2,7 +2,7 @@ function getConfig() {
   // set the dimensions and margins of the graph
   let margin = { top: 20, right: 20, bottom: 30, left: 50 };
   let height = 500 - margin.top - margin.bottom;
-  let width = 1110 - margin.left - margin.right;
+  let width = 750 - margin.left - margin.right;
   // set the ranges
   let x = d3.scaleTime().range([0, width]);
   let y = d3.scaleLinear().range([height, 0]);
@@ -15,13 +15,17 @@ function drawProgagationSpeedChart(tagId, data, clusters) {
   // append the svg object to the body of the page
   // appends a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
-  let svg = d3
-    .select(tagId)
+  let parent = d3.select(tagId);
+  let svg = parent
     .append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+  var tooltip = parent
+    .append("div")
+    .attr("class", "toolTip");
 
   // Scale the range of the data
   x.domain(d3.extent(data, d => d.date));
@@ -69,16 +73,31 @@ function drawProgagationSpeedChart(tagId, data, clusters) {
       return 'line ' + color;
     })
     .style('stroke-opacity', (d) => opacityScale(d.length))
-    .attr('d', valueline);
+    .attr('d', valueline)
+    .on("mousemove", function(d){
+      let mousePosition = d3.mouse(parent.node());
+      tooltip
+        .style("left", 60 + "px")
+        .style("top",  21 + "px")
+        .html(("<b>Headline:</b> " +d[0].headline) + "<br><b># Duplicates:</b> " + (d.length));
+    })
+    .on("mouseover", function(d){ tooltip.style("display", "inline-block");})
+    .on("mouseout", function(d){ tooltip.style("display", "none");});
 
   // Add the X Axis
   svg
     .append('g')
+    .attr("class", "x axis")
     .attr('transform', 'translate(0,' + height + ')')
-    .call(d3.axisBottom(x));
+    .call(
+      d3.axisBottom(x)
+        // .ticks(6)
+    )
 
   // Add the Y Axis
-  svg.append('g').call(d3.axisLeft(y));
+  svg.append('g')
+    .attr("class", "y axis")
+    .call(d3.axisLeft(y));
 }
 
 function renderTopClustersTable(tagId, clusters) {

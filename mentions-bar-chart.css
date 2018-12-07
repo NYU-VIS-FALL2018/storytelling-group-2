@@ -1,5 +1,6 @@
 #mentions-bar-chart {
   position: relative;
+  text-align: left;
 }
 
 #mentions-bar-chart .axis text {
@@ -24,7 +25,7 @@
 	display: none;
 }
 
-#mentions-bar-chart .toolTip {
+.toolTip {
 	position: absolute;
   display: none;
   min-width: 80px;
@@ -32,7 +33,7 @@
   background: none repeat scroll 0 0 #f9f9f9;
   border: 1px solid #D4D8DA;
   padding: 5px;
-  text-align: center;
+  text-align: left;
   font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size: 16px;
 }

@@ -44,6 +44,14 @@
   margin-right: 190px
 }
 
+@media (max-width: 992px) {
+  .main-article > * {
+    margin-left:  0px;
+    margin-right: 0px
+  }
+}
+
+
 .main-article .wide-chart {
   margin-left: 0px;
   margin-right: 0px;
@@ -62,7 +70,13 @@
 }
 
 .img-candidate {
+  display: block!important;
   max-height: 200px;
+  max-width: 100%;
+  height: auto;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  border-radius: .25rem!important;
 }
 
 .line {
@@ -84,7 +98,8 @@
 }
 
 #top-clusters-table {
-  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 16px;
 }
 
 #top-clusters-table table tr:hover {
@@ -95,4 +110,23 @@
 }
 #top-clusters-table table td span {
   vertical-align: bottom;
+}
+
+.propagation-speed-chart {
+  position: relative;
+}
+
+.propagation-speed-chart .x text {
+  font-size: 16px;
+  color: #333;
+}
+
+.propagation-speed-chart .y text {
+  color: #a3a3a3;
+  font-size: 14px;
+}
+
+.propagation-speed-chart .axis path,
+.propagation-speed-chart .axis line {
+  color: #D4D8DA;
 }
