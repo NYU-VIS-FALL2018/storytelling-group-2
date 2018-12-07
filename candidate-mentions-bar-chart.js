@@ -1,4 +1,6 @@
 function renderMentionsBarChart(data) {
+  
+  var parent = d3.select("#mentions-bar-chart");
   var svg = d3.select("#mentions-bar-chart svg"),
       margin = {top: 20, right: 20, bottom: 30, left: 100},
       width = +svg.attr("width") - margin.left - margin.right,
@@ -22,7 +24,12 @@ function renderMentionsBarChart(data) {
   g.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d); }).tickSizeInner([-height]));
+      .call(
+        d3.axisBottom(x)
+          .ticks(5)
+          .tickFormat(function(d) { return parseInt(d); })
+          .tickSizeInner([-height])
+      );
 
   g.append("g")
       .attr("class", "y axis")
@@ -39,12 +46,13 @@ function renderMentionsBarChart(data) {
       .attr("fill", "#012989")
       .attr("opacity", "0.85")
       .on("mousemove", function(d){
+        let mousePosition = d3.mouse(parent.node());
         tooltip
-          .style("left", d3.event.pageX - 50 + "px")
-          .style("top", d3.event.pageY - 70 + "px")
-          .style("display", "inline-block")
-          .html((d.candidate) + "<br>" + (d.mentions) + " headlines");
+          .style("left", mousePosition[0] + 10 + "px")
+          .style("top",  mousePosition[1] + 20 + "px")
+          .html(("<b>Candidate:</b> " +d.candidate) + "<br><b>Headline Mentions:</b> " + (d.mentions));
       })
+      .on("mouseover", function(d){ tooltip.style("display", "inline-block");})
       .on("mouseout", function(d){ tooltip.style("display", "none");});
 }
 

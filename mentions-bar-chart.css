@@ -1,6 +1,15 @@
+#mentions-bar-chart {
+  position: relative;
+}
+
 #mentions-bar-chart .axis text {
   font-size: 18px;
   color: #333;
+}
+
+#mentions-bar-chart .x text {
+  font-size: 14px;
+  color: #a3a3a3;
 }
 
 #mentions-bar-chart .axis path,
@@ -20,8 +29,10 @@
   display: none;
   min-width: 80px;
   height: auto;
-  background: none repeat scroll 0 0 #ffffff;
+  background: none repeat scroll 0 0 #f9f9f9;
   border: 1px solid #D4D8DA;
-  padding: 14px;
+  padding: 5px;
   text-align: center;
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 16px;
 }
