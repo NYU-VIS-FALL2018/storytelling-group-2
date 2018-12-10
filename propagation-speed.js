@@ -1,4 +1,4 @@
-function getConfig() {
+function getPropagationChartConfig() {
   // set the dimensions and margins of the graph
   let margin = { top: 20, right: 20, bottom: 30, left: 50 };
   let height = 500 - margin.top - margin.bottom;
@@ -77,8 +77,7 @@ function setupSlider(parentNode, onChangeCb, min, max) {
 }
 
 function renderChart(parent, data, clusters) {
-  const { width, height, margin, x, y, valueline, opacityScale } = getConfig();
-
+  const { width, height, margin, x, y, valueline, opacityScale } = getPropagationChartConfig();
   // Scale the range of the data
   x.domain(d3.extent(data, d => d.date));
   y.domain([0, d3.max(clusters, d => d.length)]);
