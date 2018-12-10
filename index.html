@@ -10,6 +10,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/noUiSlider-12.1.0/nouislider.min.css" rel="stylesheet" />
+    <style>
+    </style>
     <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
     <link
       href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
@@ -137,11 +140,11 @@
 
             <p>Following chart shows the speed wich news stories propagated from its original source to other sites.</p>
 
-            <div class="wide-chart d-flex">
-              <div id="propagation-speed-chart" class="flex-fill propagation-speed-chart"></div>
-              <div class="flex-fill" style="height:500px;overflow:auto;">
-                <div id="google_translate_element" style="text-align:center;padding-top:5px"></div>
-                <div id="top-clusters-table"></div>
+            <div class="chart wide-chart row no-gutters">
+              <div id="propagation-speed-chart" class="col chart propagation-speed-chart"></div>
+              <div class="col chart-table-container">
+                <div id="google_translate_element"></div>
+                <div id="top-clusters-table" class="table-responsive-sm"></div>
               </div>
             </div>
 
@@ -195,6 +198,8 @@
     </footer>
     <!-- D3.js -->
     <script src="d3.js"></script>
+    <script src="vendor/noUiSlider-12.1.0/nouislider.min.js"></script>
+    <script src="vendor/noUiSlider-12.1.0/wNumb.js"></script>
     <script src="candidate-mentions-bar-chart.js"></script>
     <script src="propagation-speed.js"></script>
     <script>
@@ -202,14 +207,12 @@
       const TIMESTAMP_HEADER = 'timestamp';
       const DEFAULT_MIN_DATE = '2018-09-01';
       const DEFAULT_MAX_DATE = '2018-09-11';
-      const DEFAULT_MIN_CLUSTER_SIZE = 10;
-
+      
       // const csvFile = 'data/BR-Crawl-Articles-Annotated.csv.Clustered.csv';
       // const TIMESTAMP_HEADER = 'crawl_timestamp'; //'article_timestamp';
       // const DEFAULT_MIN_DATE = '2018-07-01';
       // const DEFAULT_MAX_DATE = '2018-11-30';
-      // const DEFAULT_MIN_CLUSTER_SIZE = 10;
-
+      
       const store = {};
 
       function loadData() {
@@ -232,13 +235,13 @@
       function filterStoriesByDate(data, min, max) {
         let minDate = new Date(min) || new Date(DEFAULT_MIN_DATE);
         let maxDate = new Date(max) || new Date(DEFAULT_MAX_DATE);
-        return data.filter(d => d.date < maxDate && d.date > minDate);
+        return data.filter(d => d.date <= maxDate && d.date >= minDate);
       }
 
       function filterStoriesByClusterSize(clusters, min, max) {
-        let minSize = min || DEFAULT_MIN_CLUSTER_SIZE;
-        let maxSize = max || Number.MAX_SAFE_INTEGER;
-        return clusters.filter(c => c.length < maxSize && c.length > minSize);
+        let minSize = (typeof min === 'undefined') ? DEFAULT_MIN_CLUSTER_SIZE : min;
+        let maxSize = (typeof max ==='undefined') ? Number.MAX_SAFE_INTEGER : max;
+        return clusters.filter(c => c.length <= maxSize && c.length >= minSize);
       }
 
       function groupByClusterId(data) {
@@ -271,12 +274,22 @@
         clusters = groupByClusterId(data);
         console.log('clusters.length:' + clusters.length);
 
-        clustersFiltered = filterStoriesByClusterSize(clusters, DEFAULT_MIN_CLUSTER_SIZE);
-        console.log('clustersFiltered.length:' + clustersFiltered.length);
+        drawProgagationSpeedChart({
+          tagId: '#propagation-speed-chart',
+          data: data,
+          clusters: clusters
+        });
 
-        drawProgagationSpeedChart('#propagation-speed-chart', data, clusters);
-        drawProgagationSpeedChart('#propagation-speed-chart-min-size', data, clustersFiltered);
-        renderTopClustersTable('#top-clusters-table', clustersFiltered);
+        drawProgagationSpeedChart({
+          tagId: '#propagation-speed-chart-min-size',
+          data: data,
+          clusters: clusters,
+          slider: false,
+          min: 20,
+          max: 41
+        });
+        
+        renderTopClustersTable('#top-clusters-table', clusters);
       }
 
       loadData().then(showData);

@@ -24,33 +24,34 @@
 
 .top-background {
   /* background-image: linear-gradient(to right top, #096a42, #378841, #66a438, #9dbf27, #dcd607)!important; */
-  
+
   /* background: rgb(1,41,137)!important;
   background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 50%, rgba(220,214,7,1) 100%)!important; */
-  
-  background: rgb(1,41,137);
-  background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 100%)!important;
+
+  background: rgb(1, 41, 137);
+  background: linear-gradient(90deg, rgba(1, 41, 137, 1) 0%, rgba(9, 106, 66, 1) 100%) !important;
 
   /* background: linear-gradient(90deg, rgba(1,41,137,1) 0%, rgba(9,106,66,1) 30%, rgba(9,106,66,1) 70%, rgba(220,214,7,1) 100%)!important; */
 }
 @media only screen and (min-width: 768px) {
-  header.masthead .page-heading, header.masthead .post-heading, header.masthead .site-heading {
+  header.masthead .page-heading,
+  header.masthead .post-heading,
+  header.masthead .site-heading {
     padding: 100px 0;
   }
 }
 
 .main-article > * {
   margin-left: 190px;
-  margin-right: 190px
+  margin-right: 190px;
 }
 
 @media (max-width: 992px) {
   .main-article > * {
-    margin-left:  0px;
-    margin-right: 0px
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
-
 
 .main-article .wide-chart {
   margin-left: 0px;
@@ -60,7 +61,7 @@
 
 .chart-caption {
   font-weight: bold;
-  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-align: center;
 }
@@ -70,13 +71,13 @@
 }
 
 .img-candidate {
-  display: block!important;
+  display: block !important;
   max-height: 200px;
   max-width: 100%;
   height: auto;
-  margin-left: auto!important;
-  margin-right: auto!important;
-  border-radius: .25rem!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 0.25rem !important;
 }
 
 .line {
@@ -97,8 +98,23 @@
   stroke: #999;
 }
 
+.table-fixed {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.chart-table-container {
+  height: 500px;
+  overflow:auto;
+}
+
+.chart-table-container #google_translate_element {
+  text-align:center;
+  padding-top:5px;
+}
+
 #top-clusters-table {
-  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
 
@@ -128,5 +144,42 @@
 
 .propagation-speed-chart .axis path,
 .propagation-speed-chart .axis line {
-  color: #D4D8DA;
+  color: #d4d8da;
+}
+
+.chart {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Cluster size slider */
+
+.noUi-vertical {
+  margin: 30px 0px;
+  width: 8px;
+  height: 450px;
+}
+
+.noUi-connect {
+  background: #4462a8;
+}
+
+.noUi-handle:after,
+.noUi-handle:before {
+  display: none;
+}
+
+.noUi-vertical .noUi-handle {
+  width: 20px;
+  height: 20px;
+  left: -7px;
+}
+
+.noUi-handle:focus {
+  outline-style: none;
+}
+
+.noUi-tooltip {
+  color: #a3a3a3;
+  font-size: 13px;
 }
