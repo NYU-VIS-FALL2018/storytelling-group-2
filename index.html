@@ -124,7 +124,6 @@
                 />
               </p>
             -->
-
             <div id="mentions-bar-chart" class="mt-5">
               <svg width="730" height="500"></svg>
               <p class="chart-caption">
@@ -132,6 +131,10 @@
                 2018 Brazilian Elections.
               </p>
             </div>
+
+            <h4 class="section-heading">What the news were talking about?</h4>
+            <div id="wordcloud-news"></div>
+
 
             <h2 class="section-heading">Stories Traveled Fast</h2>
 
@@ -197,6 +200,8 @@
     <script src="d3.js"></script>
     <script src="candidate-mentions-bar-chart.js"></script>
     <script src="propagation-speed.js"></script>
+    <script src="wordcloud_news.js"></script>
+    <script src="d3.layout.cloud.js"></script>
     <script>
       const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
       const TIMESTAMP_HEADER = 'timestamp';
@@ -258,6 +263,18 @@
         return result;
       }
 
+      function concatenatedHeadlines(data) {
+          var badWords = [",", ":", "de", "para"];
+          var text = [];
+          data.forEach(function(d) {
+              var temp_text = d.headline.toLowerCase().replace(/ de | para | do | e | por |:|,|;| pelo | por | na | a | o | da | é | ao | com | em | que | no | se | tem | sobre | diz /gi, "");
+              text.push(temp_text);
+          });
+          var temp = text.filter(function(word) { return !(word in badWords) });
+          var concatenated_headlines = text.join(" ");
+          return concatenated_headlines;
+      }
+
       function showData() {
         let data = store.data;
         console.log('data.length:' + data.length);
@@ -267,7 +284,7 @@
 
         data = filterStoriesByDate(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
         console.log('data.length:' + data.length);
-
+        
         clusters = groupByClusterId(data);
         console.log('clusters.length:' + clusters.length);
 
@@ -277,6 +294,11 @@
         drawProgagationSpeedChart('#propagation-speed-chart', data, clusters);
         drawProgagationSpeedChart('#propagation-speed-chart-min-size', data, clustersFiltered);
         renderTopClustersTable('#top-clusters-table', clustersFiltered);
+        renderTopClustersTable('#top-clusters-table', clustersFiltered);
+
+        // var data_words =  "How the Word Cloud Generator Works\n";
+        renderWordCloud('#wordcloud-news', concatenatedHeadlines(data));
+
       }
 
       loadData().then(showData);
