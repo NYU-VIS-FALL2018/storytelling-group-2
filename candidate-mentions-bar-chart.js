@@ -16,7 +16,6 @@ function renderMentionsBarChart(data) {
   var g = svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     data.sort(function(a, b) { return a.mentions - b.mentions; });
-    console.log(data)
 
   x.domain([0, d3.max(data, function(d) { return +d.mentions; }) * 1.05]);
   y.domain(data.map(function(d) { return d.candidate; })).padding(0.4);
