@@ -1,15 +1,19 @@
-# Project Name
-**Authors**: Jhon Doe (jd2545), Mark Smith (ms4568)
+# News Propagation During the 2018 Brazilian Election
 
-Group X (Online: Group Y) 
+**Authors**: Aécio Santos, Anas Elghafari, Sonia Castelo
 
-![Screenhot](screenshot.jpg)
+**Group**: 2 
+
+<!-- ![Screenhot](screenshot.jpg) -->
 
 
 ## About
-In this project we ...
+
+In this project, we analyze a dataset of news articles collected from hundreds of Brazilian news websites in 2018, which cover several months that preceded the 2018 Brazilian Election. We present the preliminary results of our analysis as a story packed with interactive data visualizations.
 
 ## More
-[DEMO](https://nyu-vis-fall2018.github.io/project-template/)
 
-[Project Descrioption](project.pdf)
+You can see the current state of our project in this link: 
+- https://nyu-vis-fall2018.github.io/storytelling-group-2/
+
+
