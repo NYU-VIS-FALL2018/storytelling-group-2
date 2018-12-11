@@ -152,6 +152,17 @@
             <p>Following is the same chart with a minimum cluster size.</p>
             <div class="propagation-speed-chart" id="propagation-speed-chart-min-size"></div>
 
+            <h2 class="section-heading">Does the popularity of candidate in the news articles reflect the election results?</h2>
+            <p>
+              We now move on to investigate the relation between the news coverage and mentions and the opinion polls.
+              First Let us look at how the opinion polls fluctuated over the duration of the campaign.
+            </p>
+            <blockquote class="blockquote">
+              You can filter the visualization by clicking on the icons located in the legend. To reset the visualization, please clicks on the last clicked icon.
+            </blockquote>
+
+            <div class="scatter-plot" id="scatter-plot-poll"></div>
+
             <p>
               Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
               sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante
@@ -205,6 +216,7 @@
     <script src="propagation-speed.js"></script>
     <script src="wordcloud_news.js"></script>
     <script src="d3.layout.cloud.js"></script>
+    <script src="scatterplot-poll.js"></script>
     <script>
       const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
       const TIMESTAMP_HEADER = 'timestamp';
