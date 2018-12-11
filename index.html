@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="vendor/noUiSlider-12.1.0/nouislider.min.css" rel="stylesheet" />
-    
+
     <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
     <link
       href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
@@ -38,7 +38,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
-              <h1>News Progagation During the 2018 Brazilian Presidential Elections</h1>
+              <h1>News Progagation During the 2018 Brazilian Presidential Election</h1>
               <h2 class="subheading">
                 The political debate was highly polarized and led to the victory of the candidate with highest rejection
                 according to public opnion polls.
@@ -134,10 +134,25 @@
               </p>
             </div>
 
-            <h4 class="section-heading">What the news were talking about?</h4>
+            <h4 class="section-heading">What was the news talking about?</h4>
             <div id="wordcloud-news"></div>
 
-            <h2 class="section-heading">Stories Traveled Fast</h2>
+            <h2 class="section-heading">The spread of news online</h2>
+
+            <p>
+              Websites do not publish original content only. To measure the extent to which articles propagate on the
+              Web, we tracked news stories that were re-published in different sites from its original source. Looking
+              at this data we can see that some stories got more traction than others and therefore became more popular.
+            </p>
+
+            <div class="chart wide-chart">
+              <div id="bubble-chart"></div>
+              <p class="chart-caption">
+                Groups of news articles that re-published in websites different from its original source.<br />
+                Each bubble represents a cluster of similar articles. The color represents the candidate that each
+                article cluster mentions in its title.
+              </p>
+            </div>
 
             <p>Following chart shows the speed wich news stories propagated from its original source to other sites.</p>
 
@@ -149,8 +164,8 @@
               </div>
             </div>
 
-            <p>Following is the same chart with a minimum cluster size.</p>
-            <div class="propagation-speed-chart" id="propagation-speed-chart-min-size"></div>
+            <!-- <p>Following is the same chart with a minimum cluster size.</p>
+            <div class="propagation-speed-chart" id="propagation-speed-chart-min-size"></div> -->
 
             <h2 class="section-heading">Does the popularity of candidate in the news articles reflect the election results?</h2>
             <p>
@@ -218,16 +233,16 @@
     <script src="d3.layout.cloud.js"></script>
     <script src="scatterplot-poll.js"></script>
     <script>
-      const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
-      const TIMESTAMP_HEADER = 'timestamp';
-      const DEFAULT_MIN_DATE = '2018-09-01';
-      const DEFAULT_MAX_DATE = '2018-09-11';
-      
-      // const csvFile = 'data/BR-Crawl-Articles-Annotated.csv.Clustered.csv';
-      // const TIMESTAMP_HEADER = 'crawl_timestamp'; //'article_timestamp';
-      // const DEFAULT_MIN_DATE = '2018-07-01';
-      // const DEFAULT_MAX_DATE = '2018-11-30';
-      
+      // const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
+      // const TIMESTAMP_HEADER = 'timestamp';
+      // const DEFAULT_MIN_DATE = '2018-09-01';
+      // const DEFAULT_MAX_DATE = '2018-09-11';
+
+      const csvFile = 'data/BR-Crawl-Articles-Annotated.csv.Clustered.csv';
+      const TIMESTAMP_HEADER = 'crawl_timestamp'; //'article_timestamp';
+      const DEFAULT_MIN_DATE = '2018-07-01';
+      const DEFAULT_MAX_DATE = '2018-10-30';
+
       const store = {};
 
       function loadData() {
@@ -277,15 +292,22 @@
       }
 
       function concatenatedHeadlines(data) {
-          var badWords = [",", ":", "de", "para"];
-          var text = [];
-          data.forEach(function(d) {
-              var temp_text = d.headline.toLowerCase().replace(/ de | para | do | e | por |:|,|;| pelo | por | na | a | o | da | é | ao | com | em | que | no | se | tem | sobre | diz /gi, "");
-              text.push(temp_text);
-          });
-          var temp = text.filter(function(word) { return !(word in badWords) });
-          var concatenated_headlines = text.join(" ");
-          return concatenated_headlines;
+        var badWords = [',', ':', 'de', 'para'];
+        var text = [];
+        data.forEach(function(d) {
+          var temp_text = d.headline
+            .toLowerCase()
+            .replace(
+              / de | para | do | e | por |:|,|;| pelo | por | na | a | o | da | é | ao | com | em | que | no | se | tem | sobre | diz /gi,
+              ''
+            );
+          text.push(temp_text);
+        });
+        var temp = text.filter(function(word) {
+          return !(word in badWords);
+        });
+        var concatenated_headlines = text.join(' ');
+        return concatenated_headlines;
       }
 
       function showData() {
@@ -297,7 +319,7 @@
 
         data = filterStoriesByDate(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
         console.log('data.length:' + data.length);
-        
+
         clusters = groupByClusterId(data);
         console.log('clusters.length:' + clusters.length);
 
@@ -305,19 +327,19 @@
           tagId: '#propagation-speed-chart',
           data: data,
           clusters: clusters,
-          min: 10,
+          min: 10
         });
 
-        drawProgagationSpeedChart({
-          tagId: '#propagation-speed-chart-min-size',
-          data: data,
-          clusters: clusters,
-          slider: false,
-          table: false,
-          min: 20,
-          max: 41,
-        });
-        
+        // drawProgagationSpeedChart({
+        //   tagId: '#propagation-speed-chart-min-size',
+        //   data: data,
+        //   clusters: clusters,
+        //   slider: false,
+        //   table: false,
+        //   min: 20,
+        //   max: 41,
+        // });
+        renderBubbleChart('#bubble-chart', data, clusters);
         // var data_words =  "How the Word Cloud Generator Works\n";
         renderWordCloud('#wordcloud-news', concatenatedHeadlines(data));
       }
