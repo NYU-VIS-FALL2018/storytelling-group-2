@@ -76,7 +76,6 @@ function renderPollScatterPlotChart(data) {
             return symbol.type(symbols(d.Candidate))();
         })
         .style("fill", function (d) {
-            console.log(d.Candidate);
             return color(d.Candidate);
         })
         .attr("transform", function (d) {
