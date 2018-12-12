@@ -174,7 +174,7 @@ function drawProgagationSpeedChart(config) {
   let initialMin = typeof config.min === 'undefined' ? min : config.min;
   let initialMax = typeof config.max === 'undefined' ? max : config.max;
 
-  let filtered = filterStoriesByClusterSize(clusters, min, max);
+  let filtered = filterStoriesByClusterSize(clusters, initialMin, initialMax);
   let parent = d3.select(tagId);
   let updateChart = renderChart(parent, data, filtered);
   let updateTable = null;
