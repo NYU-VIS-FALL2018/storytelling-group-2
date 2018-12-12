@@ -1,10 +1,10 @@
-candidate,mentions
-Lula,11680
-Gomes,5293
-Bolsonaro,25017
-Haddad,10732
-Marina,2835
-Alckmin,5255
-Daciolo,326
-Amoêdo,460
-Meirelles,1239
+candidate,mentions,full_name,party,color
+Lula,11680,Luiz Inácio Lula da Silva,PT,#c20000
+Gomes,5293,Ciro Ferreira Gomes,PDT,#CCC
+Bolsonaro,25017,Jair Messias Bolsonaro,PSL,#012989
+Haddad,10732,Fernando Haddad,PT,#c20000
+Marina,2835,Maria Osmarina Marina Silva Vaz de Lima,REDE,#CCC
+Alckmin,5255,Geraldo José Rodrigues de Alckmin Filho,PSDB,#CCC
+Daciolo,326,Benevenuto Daciolo Fonseca dos Santos,PATRI,#CCC
+Amoêdo,460,João Dionisio Filgueira Barreto Amoêdo,NOVO,#CCC
+Meirelles,1239,Henrique de Campos Meirelles,MDB,#CCC

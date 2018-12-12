@@ -1,5 +1,6 @@
 function renderMentionsBarChart(data) {
-  
+
+  console.log(data)
   var parent = d3.select("#mentions-bar-chart");
   var svg = d3.select("#mentions-bar-chart svg"),
       margin = {top: 20, right: 20, bottom: 30, left: 100},
@@ -42,14 +43,14 @@ function renderMentionsBarChart(data) {
       .attr("height", y.bandwidth())
       .attr("y", function(d) { return y(d.candidate); })
       .attr("width", function(d) { return x(d.mentions); })
-      .attr("fill", "#012989")
+      .attr("fill", function(d) {return d.color})
       .attr("opacity", "0.85")
       .on("mousemove", function(d){
         let mousePosition = d3.mouse(parent.node());
         tooltip
           .style("left", mousePosition[0] + 10 + "px")
           .style("top",  mousePosition[1] + 20 + "px")
-          .html(("<b>Candidate:</b> " +d.candidate) + "<br><b>Headline Mentions:</b> " + (d.mentions));
+          .html(("<b>Candidate:</b> " +d.full_name) + "<br><b>Party:</b> " + (d.party) + "<br><b>Headline Mentions:</b> " + (d.mentions));
       })
       .on("mouseover", function(d){ tooltip.style("display", "inline-block");})
       .on("mouseout", function(d){ tooltip.style("display", "none");});
