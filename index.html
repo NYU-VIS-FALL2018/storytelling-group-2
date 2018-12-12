@@ -126,8 +126,22 @@
                 />
               </p>
             -->
-            <div id="mentions-bar-chart" class="mt-5">
+            <div id="mentions-bar-chart" class="chart mt-5">
               <svg width="730" height="500"></svg>
+              <div class="legend-container">
+                <div class="legend">
+                  <div class="block" style="background-color:#1676B6"></div>
+                  <span>PSL (Social Liberal Party)</span>
+                </div>
+                <div class="legend">
+                  <div class="block" style="background-color:#D9241E"></div>
+                  <span>PT (Worker's Party)</span>
+                </div>
+                <div class="legend">
+                  <div class="block" style="background-color:#7F7F7F"></div>
+                  <span>Others</span>
+                </div>
+              </div>
               <p class="chart-caption">
                 Number of presidential candidates mentions in article headlines during the pre-election period of the
                 2018 Brazilian Elections.
@@ -142,7 +156,7 @@
             <p>
               Websites do not publish original content only. To measure the extent to which articles propagate on the
               Web, we tracked news stories that were re-published in different sites from its original source. Looking
-              at this data we can see that some stories got more traction than others and therefore became more popular.
+              at this data we can see that some stories get more traction than others and therefore become more popular.
             </p>
 
             <div class="chart wide-chart">
@@ -154,7 +168,10 @@
               </p>
             </div>
 
-            <p>Following chart shows the speed wich news stories propagated from its original source to other sites.</p>
+            <p>
+
+              Following chart shows the speed wich news stories propagated from its original source to other sites.
+            </p>
 
             <div class="chart wide-chart row no-gutters">
               <div id="propagation-speed-chart" class="col chart propagation-speed-chart"></div>
@@ -180,8 +197,7 @@
 
             <h2 class="section-heading">Conclusion</h2>
             <p>
-              
-We can see that Bolsonaro has dominated the news coverage throughout the campaign period. What is interesting, is that a lot of the stories were not positive. There was a lot of negative coverage about his statement and his tactics (for example, the story about UN High Commissioner saying Bolsonaro's positions are dangerous for human rights). However, his polling numbers did not seem to get affected by those negative stories. Instead, we can see a correlation between his polling numbers and his mentions (regardless of whether those mentions were positive or negative). In conclusion, in the story of Bolsonaro and the Brazilian elections, we can see the truth of the saying "There is no such thing as a bad publicity".
+              We can see that Bolsonaro has dominated the news coverage throughout the campaign period. What is interesting, is that a lot of the stories were not positive. There was a lot of negative coverage about his statement and his tactics (cite examples here from the top stories). However, his polling numbers did not seem to get affected by those negative stories. Instead, we can see a correlation between his polling numbers and his mentions (regardless of whether those mentions were positive or negative). In conclusion, in the story of Bolsonaro and the Brazilian elections, we can see the truth of the saying "There is no such thing as a bad publicity".
             </p>
 
             
@@ -221,7 +237,7 @@ We can see that Bolsonaro has dominated the news coverage throughout the campaig
 
       const csvFile = 'data/BR-Crawl-Articles-Annotated.csv.Clustered.csv';
       const TIMESTAMP_HEADER = 'crawl_timestamp'; //'article_timestamp';
-      const DEFAULT_MIN_DATE = '2018-07-01';
+      const DEFAULT_MIN_DATE = '2018-08-01';
       const DEFAULT_MAX_DATE = '2018-10-30';
 
       const store = {};
@@ -308,7 +324,7 @@ We can see that Bolsonaro has dominated the news coverage throughout the campaig
           tagId: '#propagation-speed-chart',
           data: data,
           clusters: clusters,
-          min: 10
+          min: 15
         });
 
         // drawProgagationSpeedChart({
