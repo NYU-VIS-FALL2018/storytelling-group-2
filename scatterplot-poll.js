@@ -23,7 +23,7 @@ function renderPollScatterPlotChart(data) {
     var symbols = d3.scaleOrdinal(d3.symbols);
     // creates a generator for symbols
     var symbol = d3.symbol().size(50);
-    var color = d3.scaleOrdinal(d3.schemePaired);
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
     // or use
     // var color = d3.scaleOrdinal()
     //     .range(["red", "green", "blue", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
