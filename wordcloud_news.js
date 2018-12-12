@@ -24,7 +24,39 @@ function wordFreq(string) {
 
 function renderWordCloud(tagId, text) {
 
-    var word_frequency = wordFreq(text);
+    // function download(dataToSave, filename) {
+    //     var hiddenElement = document.createElement('a');
+    //     hiddenElement.href = 'data:attachment/text,' + encodeURI(dataToSave);
+    //     hiddenElement.target = '_blank';
+    //     hiddenElement.download = filename;
+    //     hiddenElement.click();
+    // }
+    // function filterWordFrequencies(word_frequency) {
+    //     var frequency_list = [];
+    //     Object.keys(word_frequency).forEach(function(word) {
+    //         frequency_list.push({'text': word, 'size': word_frequency[word] });
+    //     });
+    //     frequency_list.sort((a,b) => (b.size - a.size))
+    //     frequency_list = frequency_list.slice(0, 250);
+        
+    //     let result = {};
+    //     for (let i in frequency_list) {
+    //         let obj = frequency_list[i]
+    //         result[obj.text] = obj.size;
+    //     }
+    //     return result;
+    // }
+
+    console.log('Computing word frequencies...');
+    // var word_frequency = wordFreq(text);
+    let word_frequency = text;
+
+    // word_frequency = filterWordFrequencies(word_frequency);
+    console.log(word_frequency);
+    // download(JSON.stringify(word_frequency), 'word-frequency.json');
+    // console.log('done');
+
+
 
     var word_entries = d3.entries(word_frequency);
 

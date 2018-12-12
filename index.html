@@ -340,11 +340,18 @@
         //   max: 41,
         // });
         renderBubbleChart('#bubble-chart', data, clusters);
-        // var data_words =  "How the Word Cloud Generator Works\n";
-        renderWordCloud('#wordcloud-news', concatenatedHeadlines(data));
       }
 
+      // Load word cloud
+      Promise.all([d3.json('data/word-frequency.json')]).then(datasets => {
+        store.wordFrequencies = datasets[0];
+        return store;
+      }).then(() => {
+        renderWordCloud('#wordcloud-news', store.wordFrequencies)
+      });
+
       loadData().then(showData);
+
     </script>
 
     <script type="text/javascript">
