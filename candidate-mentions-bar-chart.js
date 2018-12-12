@@ -45,12 +45,14 @@ function renderMentionsBarChart(data) {
       .attr("width", function(d) { return x(d.mentions); })
       .attr("fill", function(d) {return d.color})
       .attr("opacity", "0.85")
-      .on("mousemove", function(d){
+      .on("mousemove", function(d) {
         let mousePosition = d3.mouse(parent.node());
         tooltip
           .style("left", mousePosition[0] + 10 + "px")
           .style("top",  mousePosition[1] + 20 + "px")
-          .html(("<b>Candidate:</b> " +d.full_name) + "<br><b>Party:</b> " + (d.party) + "<br><b>Headline Mentions:</b> " + (d.mentions));
+          .html("<b>Candidate:</b> " +d.full_name + "<br><b>Party:</b> " + d.party + "<br><b>Headline Mentions:</b> " + d.mentions
+            + '<img class="img-candidate mt-3" src="' + d.image + '"/>'
+           )
       })
       .on("mouseover", function(d){ tooltip.style("display", "inline-block");})
       .on("mouseout", function(d){ tooltip.style("display", "none");});
