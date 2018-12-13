@@ -40,8 +40,8 @@
             <div class="post-heading">
               <h1>News Progagation During the 2018 Brazilian Presidential Election</h1>
               <h2 class="subheading">
-                The political debate was highly polarized and led to the victory of the candidate with highest rejection
-                according to public opnion polls.
+                The political debate was highly polarized and led to the victory of the candidate 
+                with the most "negative" stories in the news.
               </h2>
               <span class="meta">Elaborated by Aécio Santos, Anas Elghafari, and Sonia Castelo.</span>
               <span>December, 2018.</span>
@@ -154,23 +154,30 @@
             <h2 class="section-heading">The spread of news online</h2>
 
             <p>
-              Websites do not publish original content only. To measure the extent to which articles propagate on the
-              Web, we tracked news stories that were re-published in different sites from its original source. Looking
-              at this data we can see that some stories get more traction than others and therefore become more popular.
+              Websites do not publish original content only. To measure the extent to which articles propagate on the Web, we
+              tracked news stories that were re-published in different sites from its original source. We then grouped these
+              re-published articles in clusters, which are shown in the next chart. The colors represent the main candidate
+              mentioned in the cluster's stories headlines. The height and bubble size to represent the cluster size, i.e., the
+              number of different sites that re-published the stories. The cluster size can be seen as a way to describe the reach
+              of a story. Clearly, some stories got more traction than others and therefore became more popular.
             </p>
 
-            <div class="chart wide-chart">
+            <div class="chart wide-chart-sm">
               <div id="bubble-chart"></div>
               <p class="chart-caption">
-                Groups of news articles that re-published in websites different from its original source.<br />
+                Clusters of news articles that were re-published in websites different from its original source.
                 Each bubble represents a cluster of similar articles. The color represents the candidate that each
-                article cluster mentions in its title.
+                article cluster mentions in its headline.
               </p>
             </div>
 
+            <h2 class="section-heading">News traveled fast</h2>
             <p>
-
-              Following chart shows the speed wich news stories propagated from its original source to other sites.
+              News spread quickly after its publication. In fact, most of the stories are re-published in other sites within a few
+              minutes. The next chart illustrates the speed which news stories spread to other sites by showing how the number of
+              publications within a cluster grows over time. Each line represents a cluster of stories and the colors represent the
+              main candidate mentioned in the story headline. Most clusters follow a pattern of quick growth in the beginning and a slow
+              growth toward the end.
             </p>
 
             <div class="chart wide-chart row no-gutters">
@@ -181,23 +188,28 @@
               </div>
             </div>
 
-            <!-- <p>Following is the same chart with a minimum cluster size.</p>
-            <div class="propagation-speed-chart" id="propagation-speed-chart-min-size"></div> -->
+            <h2 class="section-heading">Does candidate popularity in news articles reflect the election results?</h2>
 
-            <h2 class="section-heading">Does the popularity of candidate in the news articles reflect the election results?</h2>
             <p>
-              We now move on to investigate the relation between the news coverage and mentions and the opinion polls.
+              We now move on to investigate the relation between the news coverage mentions and the public opinion polls.
               First Let us look at how the opinion polls fluctuated over the duration of the campaign.
             </p>
-            <blockquote class="blockquote">
-              You can filter the visualization by clicking on the icons located in the legend. To reset the visualization, please clicks on the last clicked icon.
-            </blockquote>
 
-            <div class="scatter-plot" id="scatter-plot-poll"></div>
+            <blockquote class="blockquote">
+              You can filter the visualization by clicking on the icons located in the legend. To reset the visualization, please
+              click on the last clicked icon.
+            </blockquote>
+            
+            <div class="chart wide-chart-sm scatter-plot" id="scatter-plot-poll"></div>
 
             <h2 class="section-heading">Conclusion</h2>
             <p>
-              We can see that Bolsonaro has dominated the news coverage throughout the campaign period. What is interesting, is that a lot of the stories were not positive. There was a lot of negative coverage about his statement and his tactics (cite examples here from the top stories). However, his polling numbers did not seem to get affected by those negative stories. Instead, we can see a correlation between his polling numbers and his mentions (regardless of whether those mentions were positive or negative). In conclusion, in the story of Bolsonaro and the Brazilian elections, we can see the truth of the saying "There is no such thing as a bad publicity".
+              We can see that Bolsonaro has dominated the news coverage throughout the campaign period. What is interesting, is
+              that a lot of the stories were not positive. There was a lot of negative coverage about his statement and his tactics
+              (cite examples here from the top stories). However, his polling numbers did not seem to get affected by those
+              negative stories. Instead, we can see a correlation between his polling numbers and his mentions (regardless of
+              whether those mentions were positive or negative). In conclusion, in the story of Bolsonaro and the Brazilian
+              elections, we can see the truth of the saying "There is no such thing as a bad publicity".
             </p>
 
             
@@ -214,7 +226,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <p class="copyright text-muted">
-              Project developed for the Information Visualization (2018) course at NYU Tandon School of Engineering.
+              Project developed for the Information Visualization (Fall 2018) course at NYU Tandon School of Engineering.
             </p>
           </div>
         </div>

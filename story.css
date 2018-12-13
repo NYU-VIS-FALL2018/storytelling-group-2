@@ -59,6 +59,11 @@
   text-align: center;
 }
 
+.main-article  .wide-chart-sm {
+  margin-left: 140px;
+  margin-right: 140px;
+}
+
 .chart-caption {
   font-weight: bold;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
