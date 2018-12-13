@@ -132,18 +132,18 @@
   position: relative;
 }
 
-.propagation-speed-chart .x text {
-  font-size: 16px;
-  color: #333;
+.x text {
+  font-size: 14px;
+  color: #a3a3a3;
 }
 
-.propagation-speed-chart .y text {
+.y text {
   color: #a3a3a3;
   font-size: 14px;
 }
 
-.propagation-speed-chart .axis path,
-.propagation-speed-chart .axis line {
+.axis path,
+.axis line {
   color: #d4d8da;
 }
 
