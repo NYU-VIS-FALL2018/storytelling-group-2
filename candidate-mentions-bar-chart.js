@@ -51,7 +51,7 @@ function renderMentionsBarChart(data) {
           .style("left", mousePosition[0] + 10 + "px")
           .style("top",  mousePosition[1] + 20 + "px")
           .html("<b>Candidate:</b> " +d.full_name + "<br><b>Party:</b> " + d.party + "<br><b>Headline Mentions:</b> " + d.mentions
-            + '<img class="img-candidate mt-3" src="' + d.image + '"/>'
+            + '<img class="img-candidate mt-3 mb-3" src="' + d.image + '"/>'
            )
       })
       .on("mouseover", function(d){ tooltip.style("display", "inline-block");})
