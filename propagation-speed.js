@@ -337,6 +337,13 @@ function renderBubbleChart(tagId, data, clusters) {
   function getRadiusForArea(area) {
       return Math.sqrt(area/Math.PI)
   }
+
+  var formatTime = d3.timeFormat("%B %d, %Y - %I:%M %p");
+  
+  
+  let tooltip = parent
+    .append('div')
+    .attr('class', 'toolTip');
   
   // Add the valueline path to the svg
   svg
@@ -353,40 +360,27 @@ function renderBubbleChart(tagId, data, clusters) {
     })
     .attr("fill", (d) => bubbleColor(d)) //"#2a5599") // blue
     .attr("fill-opacity", d => opacityScale(d.length))
-
-  // function updateChart(clusters) {
-  //   let join = svg.selectAll('.line').data(clusters);
-
-  //   let newElements = join
-  //     .enter()
-  //     .append('path')
-  //     .attr('class', lineColor)
-  //     .style('stroke-opacity', d => opacityScale(d.length))
-  //     .attr('d', valueline)
-  //     .on('mousemove', function(d) {
-  //       let mousePosition = d3.mouse(parent.node());
-  //       tooltip
-  //         .style('left', 60 + 'px')
-  //         .style('top', 21 + 'px')
-  //         .html('<b>Headline:</b> ' + d[0].headline + '<br><b># Duplicates:</b> ' + d.length);
-  //     })
-  //     .on('mouseover', function(d) {
-  //       tooltip.style('display', 'inline-block');
-  //     })
-  //     .on('mouseout', function(d) {
-  //       tooltip.style('display', 'none');
-  //     });
-
-  //   join
-  //     .merge(newElements)
-  //     .attr('class', lineColor)
-  //     .style('stroke-opacity', d => opacityScale(d.length))
-  //     .attr('d', valueline);
-
-  //   join
-  //     .exit()
-  //     .transition()
-  //     .remove();
-  // }
-  // return updateChart;
+    .on('mousemove', function(d) {
+      let mousePosition = d3.mouse(parent.node());
+      let top;
+      if (mousePosition[1] > height/2 ) {
+        top = 21;
+      } else {
+        top = height - 70;
+      }
+      tooltip
+        .style('left', 60 + 'px')
+        .style('top', top + 'px')
+        .html(
+          '<b>Headline:</b> ' + d[0].headline + '<br>' +
+          '<b># Duplicates:</b> ' + d.length + '<br>' +
+          '<b>Date:</b> ' + formatTime(d[0].date)
+        );
+    })
+    .on('mouseover', function(d) {
+      tooltip.style('display', 'inline-block');
+    })
+    .on('mouseout', function(d) {
+      tooltip.style('display', 'none');
+    })
 }

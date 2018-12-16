@@ -103,6 +103,10 @@
   stroke: #999;
 }
 
+#bubble-chart {
+  position: relative;
+}
+
 .table-fixed {
   table-layout: fixed;
   word-wrap: break-word;
