@@ -89,6 +89,7 @@ function renderChart(parent, data, clusters) {
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   let tooltip = parent.append('div').attr('class', 'toolTip');
+  var formatTime = d3.timeFormat("%B %d, %Y - %I:%M %p");
 
   // Add the X Axis
   svg
@@ -115,11 +116,14 @@ function renderChart(parent, data, clusters) {
     .style('stroke-opacity', d => opacityScale(d.length))
     .attr('d', valueline)
     .on('mousemove', function(d) {
-      let mousePosition = d3.mouse(parent.node());
       tooltip
-        .style('left', 60 + 'px')
+        .style('left', 50 + 'px')
         .style('top', 21 + 'px')
-        .html('<b>Headline:</b> ' + d[0].headline + '<br><b># Duplicates:</b> ' + d.length);
+        .html(
+          '<b>Headline:</b> ' + d[0].headline + '<br>' +
+          '<b># Duplicates:</b> ' + d.length + '<br>' +
+          '<b>Date:</b> ' + formatTime(d[0].date)
+        );
     })
     .on('mouseover', function(d) {
       tooltip.style('display', 'inline-block');
@@ -140,9 +144,13 @@ function renderChart(parent, data, clusters) {
       .on('mousemove', function(d) {
         let mousePosition = d3.mouse(parent.node());
         tooltip
-          .style('left', 60 + 'px')
+          .style('left', 50 + 'px')
           .style('top', 21 + 'px')
-          .html('<b>Headline:</b> ' + d[0].headline + '<br><b># Duplicates:</b> ' + d.length);
+          .html(
+            '<b>Headline:</b> ' + d[0].headline + '<br>' +
+            '<b># Duplicates:</b> ' + d.length + '<br>' +
+            '<b>Date:</b> ' + formatTime(d[0].date)
+          );
       })
       .on('mouseover', function(d) {
         tooltip.style('display', 'inline-block');
@@ -340,7 +348,6 @@ function renderBubbleChart(tagId, data, clusters) {
 
   var formatTime = d3.timeFormat("%B %d, %Y - %I:%M %p");
   
-  
   let tooltip = parent
     .append('div')
     .attr('class', 'toolTip');
@@ -362,14 +369,13 @@ function renderBubbleChart(tagId, data, clusters) {
     .attr("fill-opacity", d => opacityScale(d.length))
     .on('mousemove', function(d) {
       let mousePosition = d3.mouse(parent.node());
-      let top;
-      if (mousePosition[1] > height/2 ) {
-        top = 21;
-      } else {
-        top = height - 70;
+      let y = mousePosition[1];
+      let top = y + 35;
+      if ( y > height - 70) {
+        top = y - 120;
       }
       tooltip
-        .style('left', 60 + 'px')
+        .style('left', 50 + 'px')
         .style('top', top + 'px')
         .html(
           '<b>Headline:</b> ' + d[0].headline + '<br>' +
