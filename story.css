@@ -59,7 +59,7 @@
   text-align: center;
 }
 
-.main-article  .wide-chart-sm {
+.main-article .wide-chart-sm {
   margin-left: 140px;
   margin-right: 140px;
 }
@@ -114,12 +114,12 @@
 
 .chart-table-container {
   height: 500px;
-  overflow:auto;
+  overflow: auto;
 }
 
 .chart-table-container #google_translate_element {
-  text-align:center;
-  padding-top:5px;
+  text-align: center;
+  padding-top: 5px;
 }
 
 #top-clusters-table {
@@ -202,16 +202,16 @@
 .legend-container {
   text-align: center;
   vertical-align: middle;
-  padding-top: 5px
+  padding-top: 5px;
 }
 .legend {
   display: inline-block;
-  padding:0 10px;
+  padding: 0 10px;
 }
 
 .legend .block {
-  width:12px;
-  height:12px;
-  display:inline-block;
-  background-color:#C20000;
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background-color: #c20000;
 }
