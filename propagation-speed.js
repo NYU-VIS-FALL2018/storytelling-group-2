@@ -121,8 +121,8 @@ function renderChart(parent, data, clusters) {
         .style('top', 21 + 'px')
         .html(
           '<b>Headline:</b> ' + d[0].headline + '<br>' +
-          '<b># Duplicates:</b> ' + d.length + '<br>' +
-          '<b>Date:</b> ' + formatTime(d[0].date)
+          '<b># of Publications:</b> ' + d.length + '<br>' +
+          '<b>First-Published Date:</b> ' + formatTime(d[0].date)
         );
     })
     .on('mouseover', function(d) {
@@ -148,8 +148,8 @@ function renderChart(parent, data, clusters) {
           .style('top', 21 + 'px')
           .html(
             '<b>Headline:</b> ' + d[0].headline + '<br>' +
-            '<b># Duplicates:</b> ' + d.length + '<br>' +
-            '<b>Date:</b> ' + formatTime(d[0].date)
+            '<b># of Publications:</b> ' + d.length + '<br>' +
+            '<b>First-Published Date:</b> ' + formatTime(d[0].date)
           );
       })
       .on('mouseover', function(d) {
@@ -379,8 +379,8 @@ function renderBubbleChart(tagId, data, clusters) {
         .style('top', top + 'px')
         .html(
           '<b>Headline:</b> ' + d[0].headline + '<br>' +
-          '<b># Duplicates:</b> ' + d.length + '<br>' +
-          '<b>Date:</b> ' + formatTime(d[0].date)
+          '<b># of Publications:</b> ' + d.length + '<br>' +
+          '<b>First-Published Date:</b> ' + formatTime(d[0].date)
         );
     })
     .on('mouseover', function(d) {
