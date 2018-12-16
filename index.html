@@ -352,10 +352,8 @@
       }
 
       // Load word cloud
-      Promise.all([d3.json('data/word-frequency.json')]).then(datasets => {
-        store.wordFrequencies = datasets[0];
-        return store;
-      }).then(() => {
+      d3.json('data/word-frequency.json').then(data => {
+        store.wordFrequencies = data;
         renderWordCloud('#wordcloud-news', store.wordFrequencies)
       });
 
