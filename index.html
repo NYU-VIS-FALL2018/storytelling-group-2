@@ -61,15 +61,17 @@
               military dictatorship in 1985. It was arguably one of the most controversial elections since the beginning
               of the young Brazilian democracy. During the pre-election period, we monitored hundreds of Brazilian news
               sources and compiled a database with thousands of election-related news stories that mentioned the
-              presidential candidates.
+              presidential candidates. In this article, we showcase various aspects of the election through
+              the lenses of data.
             </p>
+            
+            <h2 class="section-heading">The news mention medalists</h2>
             <div class="row no-gutters">
               <div class="col-lg-9">
                 <p>
                   According to our news database, <i class="text-blue">Jair Bolsonaro</i> was by far the most popular
-                  candidate in the terms of mentions mentions in article headlines. His polarizing and controversial
-                  views have been described as <i>far-right</i> and conservative, drawing both praise and criticism in
-                  Brazil.
+                  candidate in terms of mentions in article headlines. His polarizing and controversial views have been
+                  described as <i>far-right</i> and conservative, drawing both praise and criticism in Brazil.
                 </p>
               </div>
               <div class="col-lg-3">
@@ -117,15 +119,6 @@
               </div>
             </div>
 
-            <!--
-              <p class="d-flex justify-content-around">
-                <img
-                  class="img-candidate"
-                  title="Ciro Gomes. Source: Wikipedia"
-                  src="images/150px-Ciro_Gomes.jpg"
-                />
-              </p>
-            -->
             <div id="mentions-bar-chart" class="chart mt-5">
               <svg width="730" height="500"></svg>
               <div class="legend-container">
@@ -148,8 +141,48 @@
               </p>
             </div>
 
+
             <h4 class="section-heading">What was the news talking about?</h4>
-            <div id="wordcloud-news"></div>
+
+            <p>
+              To gain insight into the topics that bolstered candidate's news mentions, we delved into the textual content of the
+              stories. The following chart shows the most frequent words occurring in the article headlines from our database. In
+              conformance with candidate mentions, <i>Bolsonaro</i> is the most common word.
+            </p>
+            <div class="chart">
+              <div id="wordcloud-news" class="chart"></div>
+              <p class="chart-caption">Word cloud of most frequent words in article headlines.</p>
+            </div>
+
+            <p>
+              We also examined frequent words that appear associated exclusively with each of the top 3 candidates. For instance, when we look at Bolsonaro-related articles, his tragic stabbing in September 6, 2018, explains a large fraction of the most frequent terms (e.g., <i>albert, eistein, adélio, cirurgia, agressor, intestino, UTI, esfaqueado, lesão, sangue, estáve,</i> and others). Additionally, we can see words such as <i>racismo, gays,</i> and <i>negras</i> that allude to his heinous statements concerning minorities.
+            </p>
+
+            <div class="chart">
+              <div id="wordcloud-bolsonaro" class="chart"></div>
+              <p class="chart-caption">Word-cloud of most frequent words in articles that mention Bolsonaro.</p>
+            </div>
+
+            <p>
+              When we look at the left-leaning candidates, Lula and Haddad, we see a different picture. For Lula, most terms seem
+              to be judge names (e.g., <i>Favreto, Fachin, Gebran, Lewandowski, Zanin</i>), juridic terms related to his judicial
+              process (<i>habeas, corpus, TRF, apartamento, triplex, soltura</i>), or related to his candidacy rejection (<i>rejeitou</i>) .
+            </p>
+            <div class="chart">
+              <div id="wordcloud-lula" class="chart"></div>
+              <p class="chart-caption">Word-cloud of most frequent words in articles that mention Lula.</p>
+            </div>
+
+            <p>
+              For Haddad, the terms seem to be related to particular cases that involved him. For example, UTC refers to an
+              engineering company involved in a corruption proceeding, in which Haddad has been accused of receiving bribes while he
+              was a São Paulo major. The term <i>desinformação</i> (disinformation) is linked to articles associated with an
+              accusation that the marketing campaign phrase "Haddad is Lula" is misleading and produces disinformation.
+            </p>
+            <div class="chart">
+              <div id="wordcloud-haddad" class="chart"></div>
+              <p class="chart-caption">Word-cloud of most frequent words in articles that mention Haddad.</p>
+            </div>
 
             <h2 class="section-heading">The spread of news online</h2>
 
@@ -189,10 +222,11 @@
               </div>
             </div>
 
-            <h2 class="section-heading">Does candidate popularity in news articles reflect the election results?</h2>
+            <!-- <h2 class="section-heading">Does candidate popularity in news articles reflect the election results?</h2> -->
+            <h2 class="section-heading">News mentions and the opnion polls</h2>
 
             <p>
-              We now move on to investigate the relation between the news coverage mentions and the public opinion
+              We now move on to investigate the relationship between the news coverage mentions and the public opinion
               polls. First Let us look at how the opinion polls fluctuated over the duration of the campaign.
             </p>
 
@@ -352,10 +386,22 @@
         renderBubbleChart("#bubble-chart", data, clusters);
       }
 
-      // Load word cloud
+      // Load word cloud charts
       d3.json("data/word-frequency.json").then(data => {
         store.wordFrequencies = data;
         renderWordCloud("#wordcloud-news", store.wordFrequencies);
+      });
+      d3.json("data/bolsonaro-word-frequency.json").then(data => {
+        store.wordFrequencies = data;
+        renderWordCloud("#wordcloud-bolsonaro", store.wordFrequencies);
+      });
+      d3.json("data/haddad-word-frequency.json").then(data => {
+        store.wordFrequencies = data;
+        renderWordCloud("#wordcloud-haddad", store.wordFrequencies);
+      });
+      d3.json("data/lula-word-frequency.json").then(data => {
+        store.wordFrequencies = data;
+        renderWordCloud("#wordcloud-lula", store.wordFrequencies);
       });
 
       loadData().then(showData);
