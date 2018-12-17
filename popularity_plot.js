@@ -256,4 +256,4 @@ function renderPopularityPlot(dataPopu){
 
 }
 
-d3.csv("data/Headline_mentions_per_candidate_per_day.csv").then(renderPopularityPlot);
+d3.csv("data/Headline_mentions_per_candidate_per_day_cleaned.csv").then(renderPopularityPlot);
