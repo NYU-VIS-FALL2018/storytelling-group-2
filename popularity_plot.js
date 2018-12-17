@@ -244,7 +244,7 @@ function renderPopularityPlot(dataPopu){
         .attr('x', 10)
         .attr('y', 10)
         .attr('class', 'label')
-        .text('Poll');
+        .text('News Mentions');
 
     svg.append('text')
         .attr('x', width)
@@ -252,7 +252,7 @@ function renderPopularityPlot(dataPopu){
         .attr('text-anchor', 'end')
         .attr('class', 'label')
         .text('Day of Date [2018]')
-        .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 50 + ')');
+        .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 0 + ')');
 
 }
 
