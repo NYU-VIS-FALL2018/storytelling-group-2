@@ -389,7 +389,9 @@
         renderBubbleChart("#bubble-chart", data, clusters);
       }
 
+      //
       // Load word cloud charts
+      //
       d3.json("data/word-frequency.json").then(data => {
         store.wordFrequencies = data;
         renderWordCloud("#wordcloud-news", store.wordFrequencies);
@@ -405,6 +407,16 @@
       d3.json("data/lula-word-frequency.json").then(data => {
         store.wordFrequencies = data;
         renderWordCloud("#wordcloud-lula", store.wordFrequencies);
+      });
+      
+      //
+      // Load public opnion polls charts
+      //
+      d3.csv("data/opinion-polls.csv").then(data => {
+        renderPollScatterPlotChart(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
+      });
+      d3.csv("data/Headline_mentions_per_candidate_per_day_cleaned.csv").then(data => {
+        renderPopularityPlot(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
       });
 
       loadData().then(showData);

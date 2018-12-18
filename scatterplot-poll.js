@@ -1,7 +1,7 @@
 function getConfigPolls() {
     // set the dimensions and margins of the graph
     let margin = { top: 20, right: 100, bottom: 50, left: 50 };
-    let height = 500 - margin.top - margin.bottom;
+    let height = 400 - margin.top - margin.bottom;
     let width = 850 - margin.left - margin.right;
     // set the ranges
     let x = d3.scaleTime().range([0, width]);
@@ -9,7 +9,7 @@ function getConfigPolls() {
     return { margin, width, height, x, y};
 }
 
-function renderPollScatterPlotChart(data) {
+function renderPollScatterPlotChart(data, minDate, maxDate) {
     const {width, height, margin, x, y} = getConfigPolls();
 
     // parse the date / time
@@ -38,7 +38,7 @@ function renderPollScatterPlotChart(data) {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    x.domain(d3.extent(data, d => parseTime(d.Date))).nice();
+    x.domain([new Date(minDate), new Date(maxDate)])//.nice();
     y.domain([0, d3.max(data, d => +d.Poll)]);
 
     svg.append('g')
@@ -127,4 +127,4 @@ function renderPollScatterPlotChart(data) {
             return d;
         });
 }
-d3.csv("ibope-polls-filtered.csv").then(renderPollScatterPlotChart);
+

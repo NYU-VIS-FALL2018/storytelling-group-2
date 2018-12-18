@@ -9,7 +9,7 @@ function getConfigPopularity() {
     return { margin, width, height, x, y};
 }
 
-function renderPopularityPlot(dataPopu){
+function renderPopularityPlot(dataPopu, minDate, maxDate){
 
 
     var updateData = [];
@@ -106,7 +106,8 @@ function renderPopularityPlot(dataPopu){
 
     /* Scale */
     var xScale = d3.scaleTime()
-        .domain(d3.extent(data[0].values, d => d.date)).nice()
+        .domain([new Date(minDate), new Date(maxDate)])
+        // .domain(d3.extent(data[0].values, d => d.date)).nice()
         .range([0, width-margin.right]);
 
     var yScale = d3.scaleLinear()
@@ -255,5 +256,3 @@ function renderPopularityPlot(dataPopu){
         .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 0 + ')');
 
 }
-
-d3.csv("data/Headline_mentions_per_candidate_per_day_cleaned.csv").then(renderPopularityPlot);
