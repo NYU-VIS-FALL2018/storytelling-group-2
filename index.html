@@ -486,9 +486,11 @@
       d3.csv("data/opinion-polls.csv").then(data => {
         renderPollScatterPlotChart(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
       });
+      
       d3.csv("data/Headline_mentions_per_candidate_per_day_cleaned.csv").then(data => {
-        renderPopularityPlot(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
+        renderPopularityPlot("#line-plot-popularity", data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
       });
+      
 
       loadData().then(showData);
     </script>

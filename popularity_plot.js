@@ -9,7 +9,7 @@ function getConfigPopularity() {
     return { margin, width, height, x, y};
 }
 
-function renderPopularityPlot(dataPopu, minDate, maxDate){
+function renderPopularityPlot(tagId, dataPopu, minDate, maxDate){
 
 
     var updateData = [];
@@ -17,8 +17,6 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
     console.log(dataPopu);
     for(var i = 1; i<dataPopu.columns.length; i++){
         var candidateName = dataPopu.columns[i];
-        // var objectCandidate = {candidateName:[]}
-        //candidateData[candidateName] = [];
         if(candidateName !== "lula"){
             var values = [];
             for(var j = 0; j<dataPopu.length; j++){
@@ -29,7 +27,6 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
         }
 
     }
-    // console.log(JSON.stringify(updateData));
     console.log(d3.schemeCategory10);
 
     // for(var j = 0; j<dataPopu.length; j++){
@@ -70,16 +67,13 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
 
     data =updateData;
 
-    // var width = 800;
-    // var height = 500;
-    // var margin = 50;
     const {width, height, margin} = getConfigPopularity();
 
     console.log(getConfigPopularity());
 
     var duration = 250;
 
-    var lineOpacity = "0.25";
+    var lineOpacity = "0.725";
     var lineOpacityHover = "0.85";
     var otherLinesOpacityHover = "0.1";
     var lineStroke = "1.5px";
@@ -90,55 +84,38 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
     var circleRadius = 3;
     var circleRadiusHover = 6;
 
-    // parse the date / time
-    // var parseTime = d3.timeParse("%Y-%m-%d");
-
     /* Format Data */
     var parseDate = d3.timeParse("%Y-%m-%d");
-    // var parseDate = d3.timeParse("%Y");
     data.forEach(function(d) {
-        //console.log("d values: ", d.values)
         d.values.forEach(function(d) {
             d.date = parseDate(d.datetemp);
             d.popularity = +d.popularity;
         });
     });
 
-
     /* Scale */
     var xScale = d3.scaleTime()
         .domain([new Date(minDate), new Date(maxDate)])
-        // .domain(d3.extent(data[0].values, d => d.date)).nice()
         .range([0, width-margin.right]);
 
     var yScale = d3.scaleLinear()
         .domain([0, d3.max(data[0].values, d => d.popularity)])
         .range([height-margin.bottom, 0]);
 
-    // var color = d3.scaleOrdinal(d3.schemeCategory10);
-    // var candidate = [bolsonaro=1,haddad=2,lula=3,gomes=4,amoedo=5,alckmin=6,daciolo=7,meirelles=8,marina=9]
-    //var color = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
-    // var candidate = [bolsonaro-1,haddad-4,lula,gomes-3,amoedo-8,alckmin-5,daciolo-7,meirelles-6,marina-2]
+    var names = ["Bolsonaro", "Haddad", "Gomez", "Amoêdo", "Alckmin", "Daciolo", "Meirelles", "Marina"];
     var arrayColor = ["#1f77b4", "#d62728", "#2ca02c", "#7f7f7f", "#9467bd", "#e377c2", "#8c564b", "#ff7f0e"];
     var color = d3.scaleOrdinal(arrayColor);
 
-    var names = ["Bolsonaro", "Haddad", "Gomez", "Amoêdo", "Alckmin", "Daciolo", "Meirelles", "Marina"];
-
     /* Add SVG */
-    var svg = d3.select("#line-plot-popularity").append("svg")
+    var svg = d3.select(tagId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        // .attr("width", (width+margin)+"px")
-        // .attr("height", (height+margin)+"px")
-        // .append('g')
-        // .attr("transform", `translate(${margin}, ${margin})`);
-
-
     /* Add line into SVG */
     var line = d3.line()
+        .curve(d3.curveMonotoneX)
         .x(d => xScale(d.date))
         .y(d => yScale(d.popularity));
 
