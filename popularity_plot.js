@@ -28,8 +28,6 @@ function renderPopularityPlot(tagId, dataPopu, minDate, maxDate) {
 
   const { width, height, margin } = getConfigPopularity();
 
-  console.log(getConfigPopularity());
-
   var duration = 250;
 
   var lineOpacity = '1';
@@ -99,7 +97,7 @@ function renderPopularityPlot(tagId, dataPopu, minDate, maxDate) {
         .text(names[i])
         .attr('text-anchor', 'middle')
         .attr('x', (width - margin.right) / 2)
-        .attr('y', 20)
+        .attr("y", (height-margin.top-margin.bottom-200)/2)
         .attr('font-size', 20);
     })
     .on('mouseout', function(d) {
