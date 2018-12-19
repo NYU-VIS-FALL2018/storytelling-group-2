@@ -69,6 +69,7 @@
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-align: center;
+  margin-top: 15px 0 30px;
 }
 
 .copyright {
@@ -158,7 +159,16 @@
 
 .chart {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.chart text {
+  font-size: 14px;
+  fill: #a3a3a3;
+}
+
+g.legend {
+  cursor: pointer;
 }
 
 /* Cluster size slider */
@@ -191,10 +201,6 @@
 .noUi-tooltip {
   color: #a3a3a3;
   font-size: 13px;
-}
-
-.scatter-plot {
-  font: 10px sans-serif;
 }
 
 /* Legends for the bar chart */
