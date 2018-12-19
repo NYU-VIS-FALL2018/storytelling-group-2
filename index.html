@@ -56,7 +56,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-md-12 mx-auto main-article">
-            <p>
+            <p align="justify">
               In 2018, Brazil had its 8<sup>th</sup> direct democratic presidential election since the end of the
               military dictatorship in 1985. It was arguably one of the most controversial elections since the beginning
               of the young Brazilian democracy. During the pre-election period, we monitored hundreds of Brazilian news
@@ -64,11 +64,82 @@
               presidential candidates. In this article, we showcase various aspects of the election through
               the lenses of data.
             </p>
-            
+
+            <h2 class="section-heading">The Data</h2>
+            <div class="row no-gutters">
+              <div class="col-lg-9">
+                <p align="justify">
+                  Our data comes from crawling 140 Brazilian news websites. Those include all the major news websites
+                  (such as <i>globo.com</i>, <i>em.com.br</i>, and <i>uol.com.br</i>) as well as a sample of not so mainstream
+                  news sites.
+                </p>
+              </div>
+              <div class="col-lg-3">
+                <img
+                  class="img-data mt-3"
+                  title="number of websites covered"
+                  src="images/data-img1.png"
+                />
+              </div>
+            </div>
+
+            <div class="row no-gutters">
+              <div class="col-lg-9">
+                <p align="justify">
+                  The election had 2 rounds. The first round was on October 7th and the second round (the run-off between
+                  the top two candidates) was on October 28th. Our data covers the final 4 months of the campaign.
+                </p>
+              </div>
+              <div class="col-lg-3">
+                <img
+                  class="img-data mt-4"
+                  title="duration of coverage"
+                  src="images/data-img2.png"
+                />
+              </div>
+            </div>
+
+            <div class="row no-gutters">
+              <div class="col-lg-9">
+                <p align="justify">
+                  While our crawl yielded hundreds of thousands of web pages, we focused on those that had text content
+                  (which exlude video pages), were covering the election and the candidates, and were part of a story.
+                  There were 64,661 news articles that matched those criteria.
+                </p>
+              </div>
+              <div class="col-lg-3">
+                <img
+                  class="img-data mt-4"
+                  title="number of articles"
+                  src="images/data-img3.png"
+                />
+              </div>
+            </div>
+
+            <div class="row no-gutters">
+              <div class="col-lg-9">
+                <p align="justify">
+                  The same story, the same event, is often covered by many websites. While an article is simply a web page
+                  from a specific site, our goal is to understand stories: collections of articles that are reporting about the
+                  same event, using similar language. We used text clustering to group articles from different websites that are
+                  similar to each other. The results were 18,837 news stories, ranging in size from 82 articles in the biggest story to 2.
+                </p>
+              </div>
+              <div class="col-lg-3">
+                <img
+                  class="img-data mt-4"
+                  title="number of stories"
+                  src="images/data-img4.png"
+                />
+              </div>
+            </div>
+
+
+
             <h2 class="section-heading">The news mention medalists</h2>
             <div class="row no-gutters">
               <div class="col-lg-9">
-                <p>
+                <p align="justify">
                   According to our news database, <i class="text-blue">Jair Bolsonaro</i> was by far the most popular
                   candidate in terms of mentions in article headlines. His polarizing and controversial views have been
                   described as <i>far-right</i> and conservative, drawing both praise and criticism in Brazil.
@@ -85,7 +156,7 @@
 
             <div class="row no-gutters">
               <div class="col-lg-9">
-                <p>
+                <p align="justify">
                   The second most popular is <i class="text-red">Lula</i>, the former 35<sup>th</sup> Brazilian
                   president (2003-2011). Shortly after announcing his candidacy, he was disqualified from running by the
                   Superior Electoral Court (STF) on 31 August 2018 for being previously convicted on corruption charges
@@ -103,7 +174,7 @@
 
             <div class="row no-gutters">
               <div class="col-lg-9">
-                <p>
+                <p align="justify">
                   <i class="text-red">Fernando Haddad</i> was the 3<sup>rd</sup> most frequently mentioned. He was named
                   as Lula's replacement on September 1<sup>st</sup> on the Worker's Party coalition, which was
                   officially approved on <i>September 25<sup>th</sup></i
@@ -144,7 +215,7 @@
 
             <h4 class="section-heading">What was the news talking about?</h4>
 
-            <p>
+            <p align="justify">
               To gain insight into the topics that bolstered candidate's news mentions, we delved into the textual content of the
               stories. The following chart shows the most frequent words occurring in the article headlines from our database. In
               conformance with candidate mentions, <i>Bolsonaro</i> is the most common word.
@@ -154,7 +225,7 @@
               <p class="chart-caption">Word cloud of most frequent words in article headlines.</p>
             </div>
 
-            <p>
+            <p align="justify">
               We also examined frequent words that appear associated exclusively with each of the top 3 candidates. For instance, when we look at Bolsonaro-related articles, his tragic stabbing in September 6, 2018, explains a large fraction of the most frequent terms (e.g., <i>albert, eistein, adélio, cirurgia, agressor, intestino, UTI, esfaqueado, lesão, sangue, estáve,</i> and others). Additionally, we can see words such as <i>racismo, gays,</i> and <i>negras</i> that allude to his heinous statements concerning minorities.
             </p>
 
@@ -163,7 +234,7 @@
               <p class="chart-caption">Word-cloud of most frequent words in articles that mention Bolsonaro.</p>
             </div>
 
-            <p>
+            <p align="justify">
               When we look at the left-leaning candidates, Lula and Haddad, we see a different picture. For Lula, most terms seem
               to be judge names (e.g., <i>Favreto, Fachin, Gebran, Lewandowski, Zanin</i>), juridic terms related to his judicial
               process (<i>habeas, corpus, TRF, apartamento, triplex, soltura</i>), or related to his candidacy rejection (<i>rejeitou</i>) .
@@ -173,7 +244,7 @@
               <p class="chart-caption">Word-cloud of most frequent words in articles that mention Lula.</p>
             </div>
 
-            <p>
+            <p align="justify">
               For Haddad, the terms seem to be related to particular cases that involved him. For example, UTC refers to an
               engineering company involved in a corruption proceeding, in which Haddad has been accused of receiving bribes while he
               was a São Paulo major. The term <i>desinformação</i> (disinformation) is linked to articles associated with an
@@ -186,7 +257,7 @@
 
             <h2 class="section-heading">The spread of news online</h2>
 
-            <p>
+            <p align="justify">
               Websites do not publish original content only. To measure the extent to which articles propagate on the
               Web, we tracked news stories that were re-published in different sites from its original source. We then
               grouped these re-published articles in clusters, which are shown in the next chart. The colors represent
@@ -198,7 +269,7 @@
 
             <div class="chart wide-chart-sm">
               <div id="bubble-chart"></div>
-              <p class="chart-caption">
+              <p class="chart-caption" align="justify">
                 Clusters of news articles that were re-published in websites different from its original source. Each
                 bubble represents a cluster of similar articles. The color represents the candidate that each article
                 cluster mentions in its headline.
@@ -206,7 +277,7 @@
             </div>
 
             <h2 class="section-heading">News traveled fast</h2>
-            <p>
+            <p align="justify">
               News spread quickly after its publication. In fact, most of the stories are re-published in other sites
               within a few minutes. The next chart illustrates the speed which news stories spread to other sites by
               showing how the number of publications within a cluster grows over time. Each line represents a cluster of
@@ -225,12 +296,12 @@
             <!-- <h2 class="section-heading">Does candidate popularity in news articles reflect the election results?</h2> -->
             <h2 class="section-heading">News mentions and the opinion polls</h2>
 
-            <p>
+            <p align="justify">
               We now move on to investigate the relationship between the news coverage mentions and the public opinion
               polls. First Let us look at how the opinion polls fluctuated over the duration of the campaign.
             </p>
 
-            <blockquote class="blockquote">
+            <blockquote class="blockquote" align="justify">
               You can filter the visualization by clicking on the icons located in the legend. To reset the
               visualization, please click on the last clicked icon.
             </blockquote>
@@ -240,7 +311,7 @@
             <div class="chart wide-chart-sm scatter-plot" id="line-plot-popularity"></div>
 
             <h2 class="section-heading">Conclusion</h2>
-            <p>
+            <p align="justify">
               We can see that Bolsonaro has dominated the news coverage throughout the campaign period. What is
               interesting, is that a lot of the stories were not positive. There was a lot of negative coverage about
               his statement and his tactics (cite examples here from the top stories). However, his polling numbers did

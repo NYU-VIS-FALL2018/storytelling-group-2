@@ -55,14 +55,14 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         .attr('x', 10)
         .attr('y', 10)
         .attr('class', 'label')
-        .text('Poll');
+        .text('Popularity in Opinion Polls');
 
     svg.append('text')
         .attr('x', width)
         .attr('y', height - 10)
         .attr('text-anchor', 'end')
         .attr('class', 'label')
-        .text('Day of Date [2018]')
+        .text('Date')
         .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 50 + ')');
 
     // we use the ordinal scale symbols to generate symbols
@@ -81,6 +81,7 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         .attr("transform", function (d) {
             return "translate(" + x(parseTime(d.Date)) + "," + y(d.Poll) + ")";
         });
+
 
     var clicked = ""
 

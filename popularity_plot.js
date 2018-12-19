@@ -97,6 +97,7 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
     var parseDate = d3.timeParse("%Y-%m-%d");
     // var parseDate = d3.timeParse("%Y");
     data.forEach(function(d) {
+        //console.log("d values: ", d.values)
         d.values.forEach(function(d) {
             d.date = parseDate(d.datetemp);
             d.popularity = +d.popularity;
@@ -120,6 +121,8 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
     // var candidate = [bolsonaro-1,haddad-4,lula,gomes-3,amoedo-8,alckmin-5,daciolo-7,meirelles-6,marina-2]
     var arrayColor = ["#1f77b4", "#d62728", "#2ca02c", "#7f7f7f", "#9467bd", "#e377c2", "#8c564b", "#ff7f0e"];
     var color = d3.scaleOrdinal(arrayColor);
+
+    var names = ["Bolsonaro", "Haddad", "Gomez", "Amoêdo", "Alckmin", "Daciolo", "Meirelles", "Marina"];
 
     /* Add SVG */
     var svg = d3.select("#line-plot-popularity").append("svg")
@@ -150,10 +153,11 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
             svg.append("text")
                 .attr("class", "title-text")
                 .style("fill", color(i))
-                .text(d.name)
+                .text(names[i])
                 .attr("text-anchor", "middle")
                 .attr("x", (width-margin.right)/2)
-                .attr("y", 5);
+                .attr("y", 20)
+                .attr("font-size", 20);
         })
         .on("mouseout", function(d) {
             svg.select(".title-text").remove();
@@ -193,12 +197,12 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
         .data(d => d.values).enter()
         .append("g")
         .attr("class", "circle")
-        .on("mouseover", function(d) {
+        .on("mouseover", function(d, i) {
             d3.select(this)
                 .style("cursor", "pointer")
                 .append("text")
                 .attr("class", "text")
-                .text(`${d.popularity}`)
+                .text(`${String(d.date).split("00")[0]} -- ${d.popularity} mentions`)
                 .attr("x", d => xScale(d.date) + 5)
                 .attr("y", d => yScale(d.popularity) - 10);
         })
@@ -213,7 +217,7 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
         .attr("cx", d => xScale(d.date))
         .attr("cy", d => yScale(d.popularity))
         .attr("r", circleRadius)
-        .style('opacity', circleOpacity)
+        .style('opacity', 0)
         .on("mouseover", function(d) {
             d3.select(this)
                 .transition()
@@ -245,14 +249,14 @@ function renderPopularityPlot(dataPopu, minDate, maxDate){
         .attr('x', 10)
         .attr('y', 10)
         .attr('class', 'label')
-        .text('News Mentions');
+        .text('Number of News Mentions');
 
     svg.append('text')
         .attr('x', width)
         .attr('y', height - 10)
         .attr('text-anchor', 'end')
         .attr('class', 'label')
-        .text('Day of Date [2018]')
+        .text('Day')
         .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 0 + ')');
 
 }
