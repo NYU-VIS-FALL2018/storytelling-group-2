@@ -15,10 +15,8 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
     // parse the date / time
     var parseTime = d3.timeParse("%Y-%m-%d");
 
-    var xAxis = d3.axisBottom()
-        .scale(x);
-    var yAxis = d3.axisLeft()
-        .scale(y);
+    var xAxis = d3.axisBottom().scale(x);
+    var yAxis = d3.axisLeft().scale(y);
 
     var symbols = d3.scaleOrdinal(d3.symbols);
     // creates a generator for symbols
@@ -62,7 +60,7 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         .attr('y', height - 10)
         .attr('text-anchor', 'end')
         .attr('class', 'label')
-        .text('Date')
+        .text('Poll Release Date')
         .attr('transform', 'translate(-' + (width-margin.right)/2 + ', ' + 50 + ')');
 
     // we use the ordinal scale symbols to generate symbols
@@ -90,18 +88,7 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         .enter().append("g")
         .attr("class", "legend")
         .attr("transform", function (d, i) {
-            return "translate(100," + i * 20 + ")";
-        });
-
-    legend.append("path")
-        .style("fill", function (d) {
-            return color(d);
-        })
-        .attr("d", function (d, i) {
-            return symbol.type(symbols(d))();
-        })
-        .attr("transform", function (d, i) {
-            return "translate(" + (width - 10) + "," + 10 + ")";
+            return "translate(100," + (70 + (i*20)) + ")";
         })
         .on("click", function (d) {
             d3.selectAll(".symbol").style("opacity", 1)
@@ -117,6 +104,17 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
             else {
                 clicked = ""
             }
+        });
+
+    legend.append("path")
+        .style("fill", function (d) {
+            return color(d);
+        })
+        .attr("d", function (d, i) {
+            return symbol.type(symbols(d))();
+        })
+        .attr("transform", function (d, i) {
+            return "translate(" + (width - 10) + "," + 10 + ")";
         });
 
     legend.append("text")
