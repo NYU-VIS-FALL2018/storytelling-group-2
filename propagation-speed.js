@@ -1,11 +1,17 @@
 function getPropagationChartConfig() {
   // set the dimensions and margins of the graph
-  let margin = { top: 20, right: 20, bottom: 30, left: 50 };
-  let height = 500 - margin.top - margin.bottom;
-  let width = 690 - margin.left - margin.right;
+  const svgHeight = 500;
+  const svgWidth = 690;
+  const margin = { top: 20, right: 20, bottom: 90, left: 50 };
+  const margin2 = {top: 440, right: 20, bottom: 30, left: 50};
+  const height  = svgHeight - margin.top - margin.bottom;
+  const height2 = svgHeight - margin2.top - margin2.bottom;
+  const width = svgWidth - margin.left - margin.right;
   // set the ranges
-  let x = d3.scaleTime().range([0, width]);
-  let y = d3.scaleLinear().range([height, 0]);
+  const x = d3.scaleTime().range([0, width]),
+       x2 = d3.scaleTime().range([0, width]);
+  const y = d3.scaleLinear().range([height, 0]),
+       y2 = d3.scaleLinear().range([height, 0]);
 
   // defines how to draw the line
   let valueline = d3
@@ -23,7 +29,7 @@ function getPropagationChartConfig() {
     .range([0.0, 1.0])
     .domain([0, d3.max(clusters, d => d.length)]);
 
-  return { margin, width, height, x, y, valueline, opacityScale };
+  return { margin, margin2, width, height, height2, x, y, x2, y2, valueline, opacityScale };
 }
 
 function lineColor(d) {
@@ -75,41 +81,62 @@ function setupSlider(parentNode, onChangeCb, min, max, initialMin, initialMax) {
   });
 }
 
-function renderChart(parent, data, clusters) {
-  const { width, height, margin, x, y, valueline, opacityScale } = getPropagationChartConfig();
+
+function filterClusters(clusters, filters) {
+  let minDate = filters.minDate || new Date(DEFAULT_MIN_DATE);
+  let maxDate = filters.maxDate || new Date(DEFAULT_MAX_DATE);
+  let minSize = typeof filters.minSize === "undefined" ? 0 : filters.minSize;
+  let maxSize = typeof filters.maxSize === "undefined" ? Number.MAX_SAFE_INTEGER : filters.maxSize;
+  return clusters.filter(c => 
+    c.length <= maxSize && c.length >= minSize &&
+    c[c.length-1].date <= maxDate && c[0].date >= minDate
+  );
+}
+
+function renderChart(parent, data, clusters, filters, updateTable) {
+
+  let filtered = filterClusters(clusters, filters);
+
+  const { margin, margin2, width, height, height2, x, y, x2, y2, valueline, opacityScale } = getPropagationChartConfig();
+  
   // Scale the range of the data
   x.domain(d3.extent(data, d => d.date));
-  y.domain([0, d3.max(clusters, d => d.length)]);
+  y.domain([0, d3.max(filtered, d => d.length)]);
+  x2.domain(x.domain());
+  y2.domain(y.domain());
 
   let svg = parent
     .append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
+  
+  let focus = svg
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   let tooltip = parent.append('div').attr('class', 'toolTip');
   var formatTime = d3.timeFormat("%B %d, %Y - %I:%M %p");
 
+  let xAxis = d3.axisBottom(x)//.ticks(6),
+      xAxis2 = d3.axisBottom(x);//.ticks(6);
+
   // Add the X Axis
-  svg
+  focus
     .append('g')
     .attr('class', 'x axis')
     .attr('transform', 'translate(0,' + height + ')')
-    .call(
-      d3.axisBottom(x).ticks(6)
-    );
+    .call(xAxis);
 
   // Add the Y Axis
-  svg
+  focus
     .append('g')
     .attr('class', 'y axis')
     .call(d3.axisLeft(y));
 
   // Add the valueline path to the svg
-  svg
+  focus
     .selectAll('.line')
-    .data(clusters)
+    .data(filtered)
     .enter()
     .append('path')
     .attr('class', lineColor)
@@ -132,8 +159,29 @@ function renderChart(parent, data, clusters) {
       tooltip.style('display', 'none');
     });
 
-  function updateChart(clusters) {
-    let join = svg.selectAll('.line').data(clusters);
+  // Time brushing
+
+  var brush = d3.brushX()
+    .extent([[0, 0], [width, height2]])
+    .on("brush end", brushed);
+  
+  var context = svg.append("g")
+    .attr("class", "context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+  
+  context.append("g")
+    .attr("class", "axis brush-axis-x")
+    .attr("transform", "translate(0," + height2 + ")")
+    .call(xAxis2);
+
+  context.append("g")
+      .attr("class", "brush")
+      .call(brush)
+      .call(brush.move, x.range());
+
+  function updateChart(clusters, filters) {
+    let filtered = filterClusters(clusters, filters);
+    let join = focus.selectAll('.line').data(filtered);
 
     let newElements = join
       .enter()
@@ -142,7 +190,6 @@ function renderChart(parent, data, clusters) {
       .style('stroke-opacity', d => opacityScale(d.length))
       .attr('d', valueline)
       .on('mousemove', function(d) {
-        let mousePosition = d3.mouse(parent.node());
         tooltip
           .style('left', 50 + 'px')
           .style('top', 21 + 'px')
@@ -165,11 +212,25 @@ function renderChart(parent, data, clusters) {
       .style('stroke-opacity', d => opacityScale(d.length))
       .attr('d', valueline);
 
-    join
-      .exit()
-      .transition()
-      .remove();
+    join.exit().remove();
+
+    return filtered;
   }
+
+  function brushed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    // if (d3.event.type !== 'end') return; // ignore intermediate changes
+
+    var s = d3.event.selection || x2.range();
+    let timeRange = s.map(x2.invert, x2);
+    filters.minDate = timeRange[0]
+    filters.maxDate = timeRange[1]
+    x.domain([filters.minDate, filters.maxDate]);
+    focus.select(".x").call(xAxis);
+    let filtered = updateChart(clusters, filters);
+    updateTable(filtered);
+  }
+
   return updateChart;
 }
 
@@ -178,26 +239,37 @@ function drawProgagationSpeedChart(config) {
   let slider = typeof config.slider === 'undefined' ? true : config.slider;
   let table = typeof config.slider === 'undefined' ? true : config.table;
 
-  let [min, max] = d3.extent(clusters, d => d.length);
-  let initialMin = typeof config.min === 'undefined' ? min : config.min;
-  let initialMax = typeof config.max === 'undefined' ? max : config.max;
+  let [minSize, maxSize] = d3.extent(clusters, d => d.length);
+  let [minDate, maxDate] = d3.extent(data, d => d.date);
+  let initialMin = typeof config.min === 'undefined' ? minSize : config.min;
+  let initialMax = typeof config.max === 'undefined' ? maxSize : config.max;
+  let initialMinDate = typeof config.minDate === 'undefined' ? minDate : config.minDate;
+  let initialMaxDate = typeof config.maxDate === 'undefined' ? maxDate : config.maxDate;
 
-  let filtered = filterStoriesByClusterSize(clusters, initialMin, initialMax);
-  let parent = d3.select(tagId);
-  let updateChart = renderChart(parent, data, filtered);
+  let filters = {
+    minSize: initialMin,
+    maxSize: initialMax,
+    minTime: initialMinDate,
+    maxTime: initialMaxDate,
+  };
+  
   let updateTable = null;
   if (table) {
-    updateTable = renderTopClustersTable('#top-clusters-table', filtered);
+    updateTable = renderTopClustersTable('#top-clusters-table', clusters);
   }
-  onChangeFn = function(values) {
-    let min = Number.parseInt(values[0]);
-    let max = Number.parseInt(values[1]);
-    filtered = filterStoriesByClusterSize(clusters, min, max);
-    updateChart(filtered);
+
+  let parent = d3.select(tagId);
+  let updateChart = renderChart(parent, data, clusters, filters, updateTable);
+
+  let onChangeFn = function(values) {
+    filters.minSize = Number.parseInt(values[0]);
+    filters.maxSize = Number.parseInt(values[1]);
+    let filtered = updateChart(clusters, filters);
     updateTable(filtered);
   };
+
   if (slider) {
-    setupSlider(parent.node(), onChangeFn, min, max, initialMin, initialMax);
+    setupSlider(parent.node(), onChangeFn, minSize, maxSize, initialMin, initialMax);
   }
 }
 
@@ -234,7 +306,8 @@ function renderTopClustersTable(tagId, clusters) {
     });
 
   function updateTable(clusters) {
-    // create a row for each object in the data
+    // create a row for top-100 objects in the data
+    clusters = clusters.slice(0, Math.min(100, clusters.length));
     var rowsJoin = tbody.selectAll('tr').data(clusters);
 
     let newRows = rowsJoin.enter().append('tr');
@@ -256,137 +329,8 @@ function renderTopClustersTable(tagId, clusters) {
 
     cellsJoin.exit().remove();
   }
+  
   updateTable(clusters);
+
   return updateTable;
-}
-
-function getBubbleChartConfig() {
-  // set the dimensions and margins of the graph
-  let margin = { top: 20, right: 20, bottom: 30, left: 50 };
-  let height = 500 - margin.top - margin.bottom;
-  let width = 800 - margin.left - margin.right;
-  // set the ranges
-  let x = d3.scaleTime().range([0, width]);
-  let y = d3.scaleLinear().range([height, 0]);
-
-  const maxRadius = 1;
-  const minRadius = 0.2;
-  const maxArea = maxRadius * maxRadius * Math.PI;
-  const minArea = minRadius * minRadius * Math.PI;
-  // const bubbleAreaScale = d3.scaleLinear().range([minArea, maxArea])
-  const bubbleAreaScale = d3.scalePow().exponent(1.5).range([minArea, maxArea])
-
-  // Scale for the opacity
-  let opacityScale = d3
-    .scalePow()
-    // d3.scaleLinear()
-    .exponent(1)
-    .range([0.1, 1.0])
-    .domain([0, d3.max(clusters, d => d.length)]);
-
-  return { margin, width, height, x, y, bubbleAreaScale, opacityScale };
-}
-
-
-function bubbleColor(d) {
-  let bolsonaro = 0, haddad = 0;
-  d.forEach(story => {
-    if (story.headline.includes('Bolsonaro')) {
-      bolsonaro++;
-    } else if (story.headline.includes('Haddad')) {
-      haddad++;
-    }
-  });
-  let color;
-  if (bolsonaro > haddad) {
-    color = '#012989';
-  } else if (haddad > bolsonaro) {
-    color = '#c20000';
-  } else {
-    color = '#999';
-  }
-  return color;
-}
-
-function renderBubbleChart(tagId, data, clusters) {
-  const { width, height, margin, x, y, bubbleAreaScale, opacityScale } = getBubbleChartConfig();
-  
-  let [min, max] = d3.extent(clusters, d => d.length)
-
-  // Scale the range of the data
-  x.domain(d3.extent(data, d => d.date));
-  y.domain([min-1, max]);
-  
-  let parent = d3.select(tagId)
-  
-  let svg = parent
-    .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-  // Add the X Axis
-  svg
-    .append('g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + height + ')')
-    .call(
-      d3.axisBottom(x)//.ticks(6)
-    );
-
-  // Add the Y Axis
-  svg
-    .append('g')
-    .attr('class', 'y axis')
-    .call(d3.axisLeft(y));
-
-
-  function getRadiusForArea(area) {
-      return Math.sqrt(area/Math.PI)
-  }
-
-  var formatTime = d3.timeFormat("%B %d, %Y - %I:%M %p");
-  
-  let tooltip = parent
-    .append('div')
-    .attr('class', 'toolTip');
-  
-  // Add the valueline path to the svg
-  svg
-    .selectAll('circle')
-    .data(clusters)
-    .enter()
-    .append('circle')
-    .attr("cx", function(d) {
-      return x(d[0].date);
-    })
-    .attr("cy", (d) => y(d.length) )
-    .attr("r", d => {
-      return getRadiusForArea(bubbleAreaScale(d.length)) 
-    })
-    .attr("fill", (d) => bubbleColor(d)) //"#2a5599") // blue
-    .attr("fill-opacity", d => opacityScale(d.length))
-    .on('mousemove', function(d) {
-      let mousePosition = d3.mouse(parent.node());
-      let y = mousePosition[1];
-      let top = y + 35;
-      if ( y > height - 70) {
-        top = y - 120;
-      }
-      tooltip
-        .style('left', 50 + 'px')
-        .style('top', top + 'px')
-        .html(
-          '<b>Headline:</b> ' + d[0].headline + '<br>' +
-          '<b># of Publications:</b> ' + d.length + '<br>' +
-          '<b>First-Published Date:</b> ' + formatTime(d[0].date)
-        );
-    })
-    .on('mouseover', function(d) {
-      tooltip.style('display', 'inline-block');
-    })
-    .on('mouseout', function(d) {
-      tooltip.style('display', 'none');
-    })
 }

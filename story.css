@@ -108,6 +108,12 @@
   position: relative;
 }
 
+.table-box-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 14px 10px !important;
+}
+
 .table-fixed {
   table-layout: fixed;
   word-wrap: break-word;
