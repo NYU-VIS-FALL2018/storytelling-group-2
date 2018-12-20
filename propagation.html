@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Storytelling Project</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/noUiSlider-12.1.0/nouislider.min.css" rel="stylesheet" />
+
+    <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="vendor/clean-blog/css/clean-blog.min.css" rel="stylesheet" />
+
+    <!-- Story CSS files -->
+    <link href="story.css" rel="stylesheet" />
+    <link href="mentions-bar-chart.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Page Header -->
+    <header class="masthead top-background">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1>News Progagation During the 2018 Brazilian Presidential Election</h1>
+              <h2 class="subheading">
+                The political debate was highly polarized and led to the victory of the candidate with the most
+                "negative" stories in the news.
+              </h2>
+              <span class="meta">Elaborated by Aécio Santos, Anas Elghafari, and Sonia Castelo.</span>
+              <span>December, 2018.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 mx-auto main-article">
+
+            <h2 class="section-heading">News traveled fast</h2>
+
+            <div class="chart wide-chart row no-gutters">
+              <div id="propagation-speed-chart" class="col chart propagation-speed-chart"></div>
+              <div class="col chart-table-container">
+                <div id="google_translate_element"></div>
+                <div id="top-clusters-table" class="table-responsive-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <hr />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <p class="copyright text-muted">
+              Project developed for the Information Visualization (Fall 2018) course at NYU Tandon School of
+              Engineering.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- D3.js -->
+    <script src="d3.js"></script>
+    <script src="vendor/noUiSlider-12.1.0/nouislider.min.js"></script>
+    <script src="vendor/noUiSlider-12.1.0/wNumb.js"></script>
+    <script src="propagation-speed.js"></script>
+    <script>
+      // const csvFile = 'data/BR-elections-articles-v3.2.csv.no-exact-dups.lsh-0.6.csv';
+      // const TIMESTAMP_HEADER = 'timestamp';
+      // const DEFAULT_MIN_DATE = '2018-09-01';
+      // const DEFAULT_MAX_DATE = '2018-09-11';
+
+      const csvFile = "data/BR-Crawl-Articles-Clustered-NoText.csv";
+      const TIMESTAMP_HEADER = "crawl_timestamp"; //'article_timestamp';
+      const DEFAULT_MIN_DATE = "2018-08-01";
+      const DEFAULT_MAX_DATE = "2018-10-30";
+
+      const store = {};
+
+      function loadData() {
+        return Promise.all([d3.csv(csvFile)]).then(datasets => {
+          store.data = datasets[0];
+          return store;
+        });
+      }
+
+      function parseCsvDataTypes(data) {
+        data = data.filter(d => d[TIMESTAMP_HEADER]);
+        data = data.filter(d => d.domain !== "ocafezinho.com"); // BAD data
+        data.forEach(d => {
+          d.cluster_id = +d.cluster_id;
+          d.date = new Date(d[TIMESTAMP_HEADER]);
+        });
+        return data;
+      }
+
+      function filterStoriesByDate(data, min, max) {
+        let minDate = new Date(min) || new Date(DEFAULT_MIN_DATE);
+        let maxDate = new Date(max) || new Date(DEFAULT_MAX_DATE);
+        return data.filter(d => d.date <= maxDate && d.date >= minDate);
+      }
+
+      function filterStoriesByClusterSize(clusters, min, max) {
+        let minSize = typeof min === "undefined" ? DEFAULT_MIN_CLUSTER_SIZE : min;
+        let maxSize = typeof max === "undefined" ? Number.MAX_SAFE_INTEGER : max;
+        return clusters.filter(c => c.length <= maxSize && c.length >= minSize);
+      }
+
+      function groupByClusterId(data) {
+        let result = {};
+        data.forEach(function(d) {
+          let group = result[d.cluster_id] || [];
+          group.push(d);
+          result[d.cluster_id] = group;
+        });
+        // converts the results object into an array
+        result = Object.keys(result).map(key => {
+          // sorts each stories cluster by date
+          return result[key].sort((a, b) => d3.ascending(a.date, b.date));
+        });
+        // make sure clusters are sorted from largest to smallest
+        result.sort((a, b) => d3.descending(a.length, b.length));
+        return result;
+      }
+
+      function concatenatedHeadlines(data) {
+        var badWords = [",", ":", "de", "para"];
+        var text = [];
+        data.forEach(function(d) {
+          var temp_text = d.headline
+            .toLowerCase()
+            .replace(
+              / de | para | do | e | por |:|,|;| pelo | por | na | a | o | da | é | ao | com | em | que | no | se | tem | sobre | diz /gi,
+              ""
+            );
+          text.push(temp_text);
+        });
+        var temp = text.filter(function(word) {
+          return !(word in badWords);
+        });
+        var concatenated_headlines = text.join(" ");
+        return concatenated_headlines;
+      }
+
+      function showData() {
+        let data = store.data;
+        console.log("data.length:" + data.length);
+
+        data = parseCsvDataTypes(data);
+        console.log("data.length:" + data.length);
+
+        data = filterStoriesByDate(data, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE);
+        console.log("data.length:" + data.length);
+
+        clusters = groupByClusterId(data);
+        console.log("clusters.length:" + clusters.length);
+
+        drawProgagationSpeedChart({
+          tagId: "#propagation-speed-chart",
+          data: data,
+          clusters: clusters,
+          min: 15
+        });
+      }
+
+      loadData().then(showData);
+    </script>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: "pt" }, "google_translate_element");
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+  </body>
+</html>
