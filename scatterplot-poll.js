@@ -14,7 +14,7 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
 
     // parse the date / time
     var parseTime = d3.timeParse("%Y-%m-%d");
-
+    var duration = 250;
     var xAxis = d3.axisBottom().scale(x);
     var yAxis = d3.axisLeft().scale(y);
 
@@ -36,8 +36,33 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+
+
     x.domain([new Date(minDate), new Date(maxDate)])//.nice();
     y.domain([0, d3.max(data, d => +d.Poll)]);
+
+    // tooltip mouseover event handler
+    var tipMouseover = function(d) {
+        var html  = "<b style='color:" + color(d.Candidate) + ";'>" + d.Candidate + "</b><br/>" +
+            "<b> Date: </b> " + `${String(d.Date).split('00')[0]}` + " <br><b/> Poll value:</b> " + d.Poll + "";
+        tooltip.html(html)
+            .style("left", (d3.event.pageX - 100) + "px")
+            .style("top", (d3.event.pageY - 700) + "px")
+            .style("position", "absolute")
+            .style("font-size", "12px")
+            .style("width", "auto")
+            .style("height", "auto")
+            .style("background-color", "lightgray")
+            .transition()
+            .duration(200) // ms
+            .style("opacity", .9)
+    };
+    // tooltip mouseout event handler
+    var tipMouseout = function(d) {
+        tooltip.transition()
+            .duration(300) // ms
+            .style("opacity", 0); // don't care about position!
+    };
 
     svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
@@ -78,7 +103,10 @@ function renderPollScatterPlotChart(data, minDate, maxDate) {
         })
         .attr("transform", function (d) {
             return "translate(" + x(parseTime(d.Date)) + "," + y(d.Poll) + ")";
-        });
+        })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
+
 
 
     var clicked = ""
